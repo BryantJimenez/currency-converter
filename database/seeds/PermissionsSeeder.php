@@ -1,8 +1,6 @@
 <?php
 
-use App\Models\User;
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
 class PermissionsSeeder extends Seeder
@@ -14,10 +12,10 @@ class PermissionsSeeder extends Seeder
      */
     public function run()
     {
-        // Permiso para Acceder al Panel Administrativo
+        // Permission to Access the Administrative Panel
         Permission::create(['name' => 'dashboard']);
 
-        // Permisos de Usuarios
+        // User Permissions
         Permission::create(['name' => 'users.index']);
         Permission::create(['name' => 'users.create']);
         Permission::create(['name' => 'users.show']);
@@ -25,14 +23,5 @@ class PermissionsSeeder extends Seeder
         Permission::create(['name' => 'users.delete']);
         Permission::create(['name' => 'users.active']);
         Permission::create(['name' => 'users.deactive']);
-
-    	$superadmin=Role::create(['name' => 'Super Admin']);
-        $superadmin->givePermissionTo(Permission::all());
-        
-        $admin=Role::create(['name' => 'Administrador']);
-    	$admin->givePermissionTo(Permission::all());
-
-    	$user=User::find(1);
-    	$user->assignRole('Super Admin');
     }
 }

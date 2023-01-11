@@ -22,5 +22,8 @@ class UsersTableSeeder extends Seeder
         	'password' => bcrypt('12345678'),
         	'state' => "1"
         ]);
+
+        $user=User::find(1);
+        $user->assignRole('Super Admin');
     }
 }
