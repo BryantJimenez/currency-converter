@@ -26,7 +26,7 @@ class UserUpdateRequest extends FormRequest
      */
     public function rules()
     {
-        $roles=Role::all()->pluck('name');
+        $roles=Role::where('name', '!=', 'Cliente')->pluck('name');
         return [
             'photo' => 'nullable|file|mimetypes:image/*',
             'name' => 'required|string|min:2|max:191',

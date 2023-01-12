@@ -150,7 +150,9 @@ return [
         'password'              => 'contraseña',
         'confirm'               => 'confirmar contraseña',
         'password_confirmation' => 'confirmar contraseña',
-        'state'                 => 'estado'
+        'state'                 => 'estado',
+        'country_id'            => 'país',
+        'dni'                   => 'dni'
     ],
 ];
 ?>

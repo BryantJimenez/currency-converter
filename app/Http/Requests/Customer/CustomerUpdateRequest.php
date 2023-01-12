@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Requests\User;
+namespace App\Http\Requests\Customer;
 
-use Spatie\Permission\Models\Role;
+use App\Models\Country;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
-class UserStoreRequest extends FormRequest
+class CustomerUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,15 +26,17 @@ class UserStoreRequest extends FormRequest
      */
     public function rules()
     {
-        $roles=Role::where('name', '!=', 'Cliente')->pluck('name');
+        $countries=Country::all()->pluck('code');
+        $country=Country::where('code', $this->country_id)->first();
+        $country_id=(!is_null($country)) ? $country->id : NULL;
         return [
             'photo' => 'nullable|file|mimetypes:image/*',
             'name' => 'required|string|min:2|max:191',
             'lastname' => 'required|string|min:2|max:191',
+            'dni' => 'required|string|min:1|max:20|'.Rule::unique('users', 'dni')->where('country_id', $country_id)->ignore($this->user->id),
             'phone' => 'required|string|min:5|max:15',
-            'type' => 'required|'.Rule::in($roles),
-            'email' => 'required|string|email|max:191|unique:users,email',
-            'password' => 'required|string|min:8|confirmed'
+            'address' => 'required|string|min:2|max:191',
+            'country_id' => 'required|'.Rule::in($countries)
         ];
     }
 }

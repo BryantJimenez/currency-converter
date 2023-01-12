@@ -15,10 +15,10 @@ class UsersTableSeeder extends Seeder
         User::create([
         	'name' => 'Super',
             'lastname' => 'Admin',
-            'phone' => '12345678',
         	'photo' => 'usuario.png',
         	'slug' => 'super-admin',
         	'email' => 'admin@gmail.com',
+            'phone' => '12345678',
         	'password' => bcrypt('12345678'),
         	'state' => "1"
         ]);

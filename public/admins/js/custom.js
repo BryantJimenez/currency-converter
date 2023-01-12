@@ -280,7 +280,7 @@ $('#stateCheckbox').change(function(event) {
   }
 });
 
-//funciones para desactivar y activar
+// Funciones para desactivar y activar
 function deactiveUser(slug) {
   $("#deactiveUser").modal();
   $('#formDeactiveUser').attr('action', '/admin/usuarios/' + slug + '/desactivar');
@@ -291,8 +291,23 @@ function activeUser(slug) {
   $('#formActiveUser').attr('action', '/admin/usuarios/' + slug + '/activar');
 }
 
-//funciones para preguntar al eliminar
+function deactiveCustomer(slug) {
+  $("#deactiveCustomer").modal();
+  $('#formDeactiveCustomer').attr('action', '/admin/clientes/' + slug + '/desactivar');
+}
+
+function activeCustomer(slug) {
+  $("#activeCustomer").modal();
+  $('#formActiveCustomer').attr('action', '/admin/clientes/' + slug + '/activar');
+}
+
+// Funciones para preguntar al eliminar
 function deleteUser(slug) {
   $("#deleteUser").modal();
   $('#formDeleteUser').attr('action', '/admin/usuarios/' + slug);
+}
+
+function deleteCustomer(slug) {
+  $("#deleteCustomer").modal();
+  $('#formDeleteCustomer').attr('action', '/admin/clientes/' + slug);
 }

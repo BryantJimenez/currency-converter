@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	//Usuarios login
+	// Login
 	$("button[action='login']").on("click",function(){
 		$("#formLogin").validate({
 			rules:
@@ -24,58 +24,7 @@ $(document).ready(function(){
 		});
 	});
 
-	//Usuarios register
-	$("button[action='register']").on("click",function(){
-		$("#formRegister").validate({
-			rules:
-			{
-				name: {
-					required: true,
-					minlength: 2,
-					maxlength: 191
-				},
-
-				lastname: {
-					required: true,
-					minlength: 2,
-					maxlength: 191
-				},
-
-				email: {
-					required: true,
-					email: true,
-					minlength: 5,
-					maxlength: 191,
-					remote: {
-						url: "/usuarios/email",
-						type: "get"
-					}
-				},
-
-				password: {
-					required: true,
-					minlength: 8,
-					maxlength: 40
-				},
-
-				terms: {
-					required: true
-				}
-			},
-			messages:
-			{
-				email: {
-					remote: "Este correo ya esta en uso."
-				}
-			},
-			submitHandler: function(form) {
-				$("button[action='register']").attr('disabled', true);
-				form.submit();
-			}
-		});
-	});
-
-	//Recuperar Contraseña
+	// Recovery Password
 	$("button[action='recovery']").on("click",function(){
 		$("#formRecovery").validate({
 			rules:
@@ -94,7 +43,7 @@ $(document).ready(function(){
 		});
 	});
 
-	//Restaurar Contraseña
+	// Reset Password
 	$("button[action='reset']").on("click",function(){
 		$("#formReset").validate({
 			rules:
@@ -125,7 +74,7 @@ $(document).ready(function(){
 		});
 	});
 
-	//Perfil
+	// Profile
 	$("button[action='profile']").on("click",function(){
 		$("#formProfile").validate({
 			rules:
@@ -167,7 +116,7 @@ $(document).ready(function(){
 		});
 	});
 
-	// Usuarios
+	// Users
 	$("button[action='user']").on("click",function(){
 		$("#formUser").validate({
 			rules:
@@ -205,6 +154,10 @@ $(document).ready(function(){
 					required: true
 				},
 
+				state: {
+					required: true
+				},
+
 				password: {
 					required: true,
 					minlength: 8,
@@ -229,6 +182,73 @@ $(document).ready(function(){
 			},
 			submitHandler: function(form) {
 				$("button[action='user']").attr('disabled', true);
+				form.submit();
+			}
+		});
+	});
+
+	// Customers
+	$("button[action='customer']").on("click",function(){
+		$("#formCustomer").validate({
+			rules:
+			{
+				name: {
+					required: true,
+					minlength: 2,
+					maxlength: 191
+				},
+
+				lastname: {
+					required: true,
+					minlength: 2,
+					maxlength: 191
+				},
+
+				dni: {
+					required: true,
+					minlength: 1,
+					maxlength: 20
+				},
+
+				email: {
+					required: true,
+					email: true,
+					minlength: 5,
+					maxlength: 191,
+					remote: {
+						url: "/usuarios/email",
+						type: "get"
+					}
+				},
+
+				phone: {
+					required: true,
+					minlength: 5,
+					maxlength: 15
+				},
+
+				address: {
+					required: true,
+					minlength: 5,
+					maxlength: 15
+				},
+
+				country_id: {
+					required: true
+				}
+			},
+			messages:
+			{
+				email: {
+					remote: "Este correo ya esta en uso."
+				},
+
+				country_id: {
+					required: 'Seleccione una opción.'
+				}
+			},
+			submitHandler: function(form) {
+				$("button[action='customer']").attr('disabled', true);
 				form.submit();
 			}
 		});
