@@ -301,6 +301,16 @@ function activeCustomer(slug) {
   $('#formActiveCustomer').attr('action', '/admin/clientes/' + slug + '/activar');
 }
 
+function deactiveCurrency(slug) {
+  $("#deactiveCurrency").modal();
+  $('#formDeactiveCurrency').attr('action', '/admin/monedas/' + slug + '/desactivar');
+}
+
+function activeCurrency(slug) {
+  $("#activeCurrency").modal();
+  $('#formActiveCurrency').attr('action', '/admin/monedas/' + slug + '/activar');
+}
+
 // Funciones para preguntar al eliminar
 function deleteUser(slug) {
   $("#deleteUser").modal();
@@ -310,4 +320,9 @@ function deleteUser(slug) {
 function deleteCustomer(slug) {
   $("#deleteCustomer").modal();
   $('#formDeleteCustomer').attr('action', '/admin/clientes/' + slug);
+}
+
+function deleteCurrency(slug) {
+  $("#deleteCurrency").modal();
+  $('#formDeleteCurrency').attr('action', '/admin/monedas/' + slug);
 }

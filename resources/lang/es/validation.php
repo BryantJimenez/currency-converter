@@ -152,7 +152,9 @@ return [
         'password_confirmation' => 'confirmar contraseña',
         'state'                 => 'estado',
         'country_id'            => 'país',
-        'dni'                   => 'dni'
+        'dni'                   => 'dni',
+        'iso'                   => 'iso',
+        'symbol'                => 'simbolo'
     ],
 ];
 ?>

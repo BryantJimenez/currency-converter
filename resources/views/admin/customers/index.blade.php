@@ -117,72 +117,15 @@
 </div>
 
 @can('customers.deactive')
-<div class="modal fade" id="deactiveCustomer" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title">¿Estás seguro de que quieres desactivar este cliente?</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn" data-dismiss="modal">Cancelar</button>
-				<form action="#" method="POST" id="formDeactiveCustomer">
-					@csrf
-					@method('PUT')
-					<button type="submit" class="btn btn-primary">Desactivar</button>
-				</form>
-			</div>
-		</div>
-	</div>
-</div>
+<x-modal-simple modal="deactiveCustomer" form="formDeactiveCustomer" method="PUT" title="¿Estás seguro de que quieres desactivar este cliente?" button="Desactivar"></x-modal-simple>
 @endcan
 
 @can('customers.active')
-<div class="modal fade" id="activeCustomer" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title">¿Estás seguro de que quieres activar este cliente?</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn" data-dismiss="modal">Cancelar</button>
-				<form action="#" method="POST" id="formActiveCustomer">
-					@csrf
-					@method('PUT')
-					<button type="submit" class="btn btn-primary">Activar</button>
-				</form>
-			</div>
-		</div>
-	</div>
-</div>
+<x-modal-simple modal="activeCustomer" form="formActiveCustomer" method="PUT" title="¿Estás seguro de que quieres activar este cliente?" button="Activar"></x-modal-simple>
 @endcan
 
 @can('customers.delete')
-<div class="modal fade" id="deleteCustomer" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title">¿Estás seguro de que quieres eliminar este cliente?</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn" data-dismiss="modal">Cancelar</button>
-				<form action="#" method="POST" id="formDeleteCustomer">
-					@csrf
-					@method('DELETE')
-					<button type="submit" class="btn btn-primary">Eliminar</button>
-				</form>
-			</div>
-		</div>
-	</div>
-</div>
+<x-modal-simple modal="deleteCustomer" form="formDeleteCustomer" method="DELETE" title="¿Estás seguro de que quieres eliminar este cliente?" button="Eliminar"></x-modal-simple>
 @endcan
 
 @endsection

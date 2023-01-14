@@ -253,4 +253,34 @@ $(document).ready(function(){
 			}
 		});
 	});
+
+	// Currencies
+	$("button[action='currency']").on("click",function(){
+		$("#formCurrency").validate({
+			rules:
+			{
+				name: {
+					required: true,
+					minlength: 2,
+					maxlength: 191
+				},
+
+				iso: {
+					required: true,
+					minlength: 3,
+					maxlength: 3
+				},
+
+				symbol: {
+					required: true,
+					minlength: 1,
+					maxlength: 2
+				}
+			},
+			submitHandler: function(form) {
+				$("button[action='currency']").attr('disabled', true);
+				form.submit();
+			}
+		});
+	});
 });

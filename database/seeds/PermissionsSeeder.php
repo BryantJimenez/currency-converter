@@ -32,5 +32,14 @@ class PermissionsSeeder extends Seeder
         Permission::create(['name' => 'customers.delete']);
         Permission::create(['name' => 'customers.active']);
         Permission::create(['name' => 'customers.deactive']);
+
+        // Currency Permissions
+        Permission::create(['name' => 'currencies.index']);
+        Permission::create(['name' => 'currencies.create']);
+        Permission::create(['name' => 'currencies.show']);
+        Permission::create(['name' => 'currencies.edit']);
+        Permission::create(['name' => 'currencies.delete']);
+        Permission::create(['name' => 'currencies.active']);
+        Permission::create(['name' => 'currencies.deactive']);
     }
 }

@@ -59,4 +59,17 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
 		Route::put('/{user:slug}/activar', 'CustomerController@activate')->name('customers.activate')->middleware('permission:customers.active');
 		Route::put('/{user:slug}/desactivar', 'CustomerController@deactivate')->name('customers.deactivate')->middleware('permission:customers.deactive');
 	});
+
+	// Currencies
+	Route::prefix('monedas')->group(function () {
+		Route::get('/', 'CurrencyController@index')->name('currencies.index')->middleware('permission:currencies.index');
+		Route::get('/registrar', 'CurrencyController@create')->name('currencies.create')->middleware('permission:currencies.create');
+		Route::post('/', 'CurrencyController@store')->name('currencies.store')->middleware('permission:currencies.create');
+		Route::get('/{currency:slug}', 'CurrencyController@show')->name('currencies.show')->middleware('permission:currencies.show');
+		Route::get('/{currency:slug}/editar', 'CurrencyController@edit')->name('currencies.edit')->middleware('permission:currencies.edit');
+		Route::put('/{currency:slug}', 'CurrencyController@update')->name('currencies.update')->middleware('permission:currencies.edit');
+		Route::delete('/{currency:slug}', 'CurrencyController@destroy')->name('currencies.delete')->middleware('permission:currencies.delete');
+		Route::put('/{currency:slug}/activar', 'CurrencyController@activate')->name('currencies.activate')->middleware('permission:currencies.active');
+		Route::put('/{currency:slug}/desactivar', 'CurrencyController@deactivate')->name('currencies.deactivate')->middleware('permission:currencies.deactive');
+	});
 });

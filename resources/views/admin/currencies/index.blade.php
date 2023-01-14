@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 
-@section('title', 'Lista de Usuarios')
+@section('title', 'Lista de Monedas')
 
 @section('breadcrumb')
 <li class="breadcrumb-item">
-    <a href="javascript:void(0);">Usuarios</a>
+    <a href="javascript:void(0);">Monedas</a>
 </li>
 <li class="breadcrumb-item active" aria-current="page">
     <a href="javascript:void(0);">Lista</a>
@@ -29,7 +29,7 @@
 	        <div class="widget-header">
 	            <div class="row">
 	                <div class="col-12">
-	                    <h4>Lista de Usuarios</h4>
+	                    <h4>Lista de Monedas</h4>
 	                </div>
 	            </div>
 	        </div>
@@ -37,9 +37,9 @@
 
 	        	<div class="row">
 					<div class="col-12 mt-3">
-						@can('users.create')
+						@can('currencies.create')
 						<div class="text-right mr-3">
-							<a href="{{ route('users.create') }}" class="btn btn-primary">Agregar</a>
+							<a href="{{ route('currencies.create') }}" class="btn btn-primary">Agregar</a>
 						</div>
 						@endcan
 
@@ -47,62 +47,49 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-									<th>Nombre Completo</th>
-									<th>Correo</th>
-									<th>Teléfono</th>
-									<th>Tipo</th>
+									<th>Nombre</th>
+									<th>ISO</th>
+									<th>Simbolo</th>
 									<th>Estado</th>
-                                    @if(auth()->user()->can('users.show') || auth()->user()->can('users.edit') || auth()->user()->can('users.active') || auth()->user()->can('users.deactive') || auth()->user()->can('users.delete'))
+                                    @if(auth()->user()->can('currencies.edit') || auth()->user()->can('currencies.active') || auth()->user()->can('currencies.deactive') || auth()->user()->can('currencies.delete'))
 									<th class="no-content">Acciones</th>
 									@endif
                                 </tr>
                             </thead>
                             <tbody>
-								@foreach($users as $user)
+								@foreach($currencies as $currency)
 								<tr>
 									<td>{{ $loop->iteration }}</td>
-									<td class="d-flex align-items-center">
-										<img src="{{ image_exist('/admins/img/users/', $user->photo, true) }}" class="rounded-circle mr-2" width="45" height="45" alt="{{ $user->name." ".$user->lastname }}" title="{{ $user->name." ".$user->lastname }}"> {{ $user->name." ".$user->lastname }}
-									</td>
-									<td>{{ $user->email }}</td>
-									<td>{{ $user->phone }}</td>
-									<td>{!! roleUser($user) !!}</td>
-									<td>{!! state($user->state) !!}</td>
-									@if(auth()->user()->can('users.show') || auth()->user()->can('users.edit') || auth()->user()->can('users.active') || auth()->user()->can('users.deactive') || auth()->user()->can('users.delete'))
+									<td>{{ $currency->name }}</td>
+									<td>{{ $currency->iso }}</td>
+									<td>{{ $currency->symbol }}</td>
+									<td>{!! state($currency->state) !!}</td>
+									@if(auth()->user()->can('currencies.edit') || auth()->user()->can('currencies.active') || auth()->user()->can('currencies.deactive') || auth()->user()->can('currencies.delete'))
 									<td>
 										<div class="btn-group btn-svg-sm" role="group">
-											@can('users.show')
-											<a href="{{ route('users.show', ['user' => $user->slug]) }}" class="btn btn-primary btn-sm bs-tooltip mr-0" title="Perfil">
-												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-											</a>
-											@endcan
-											@can('users.edit')
-											<a href="{{ route('users.edit', ['user' => $user->slug]) }}" class="btn btn-info btn-sm bs-tooltip mr-0" title="Editar">
+											@can('currencies.edit')
+											<a href="{{ route('currencies.edit', ['currency' => $currency->slug]) }}" class="btn btn-info btn-sm bs-tooltip mr-0" title="Editar">
 												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
 											</a>
 											@endcan
-											@if(Auth::user()->id!=$user->id)
-											@if($user->state=='Activo')
-											@can('users.deactive')
-											<button type="button" class="btn btn-warning btn-sm bs-tooltip mr-0" title="Desactivar" onclick="deactiveUser('{{ $user->slug }}')">
+											@if($currency->state=='Activo')
+											@can('currencies.deactive')
+											<button type="button" class="btn btn-warning btn-sm bs-tooltip mr-0" title="Desactivar" onclick="deactiveCurrency('{{ $currency->slug }}')">
 												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-power"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path><line x1="12" y1="2" x2="12" y2="12"></line></svg>
 											</button>
 											@endcan
 											@else
-											@can('users.active')
-											<button type="button" class="btn btn-success btn-sm bs-tooltip mr-0" title="Activar" onclick="activeUser('{{ $user->slug }}')">
+											@can('currencies.active')
+											<button type="button" class="btn btn-success btn-sm bs-tooltip mr-0" title="Activar" onclick="activeCurrency('{{ $currency->slug }}')">
 												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
 											</button>
 											@endcan
 											@endif
-											@can('users.delete')
-											@if(!$user->hasRole('Super Admin') || ($user->hasRole('Super Admin') && Auth::user()->hasRole('Super Admin')))
-											<button type="button" class="btn btn-danger btn-sm bs-tooltip mr-0" title="Eliminar" onclick="deleteUser('{{ $user->slug }}')">
+											@can('currencies.delete')
+											<button type="button" class="btn btn-danger btn-sm bs-tooltip mr-0" title="Eliminar" onclick="deleteCurrency('{{ $currency->slug }}')">
 												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
 											</button>
-											@endif
 											@endcan
-											@endif
 										</div>
 									</td>
 									@endif
@@ -118,16 +105,16 @@
     </div>
 </div>
 
-@can('users.deactive')
-<x-modal-simple modal="deactiveUser" form="formDeactiveUser" method="PUT" title="¿Estás seguro de que quieres desactivar este usuario?" button="Desactivar"></x-modal-simple>
+@can('currencies.deactive')
+<x-modal-simple modal="deactiveCurrency" form="formDeactiveCurrency" method="PUT" title="¿Estás seguro de que quieres desactivar esta moneda?" button="Desactivar"></x-modal-simple>
 @endcan
 
-@can('users.active')
-<x-modal-simple modal="activeUser" form="formActiveUser" method="PUT" title="¿Estás seguro de que quieres activar este usuario?" button="Activar"></x-modal-simple>
+@can('currencies.active')
+<x-modal-simple modal="activeCurrency" form="formActiveCurrency" method="PUT" title="¿Estás seguro de que quieres activar esta moneda?" button="Activar"></x-modal-simple>
 @endcan
 
-@can('users.delete')
-<x-modal-simple modal="deleteUser" form="formDeleteUser" method="DELETE" title="¿Estás seguro de que quieres eliminar este usuario?" button="Eliminar"></x-modal-simple>
+@can('currencies.delete')
+<x-modal-simple modal="deleteCurrency" form="formDeleteCurrency" method="DELETE" title="¿Estás seguro de que quieres eliminar esta moneda?" button="Eliminar"></x-modal-simple>
 @endcan
 
 @endsection
