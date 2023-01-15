@@ -39,7 +39,7 @@
 					<div class="col-12 mt-3">
 						@can('users.create')
 						<div class="text-right mr-3">
-							<a href="{{ route('users.create') }}" class="btn btn-primary">Agregar</a>
+							<a href="{{ route('users.create') }}" class="btn btn-sm btn-primary">Agregar</a>
 						</div>
 						@endcan
 
@@ -119,15 +119,15 @@
 </div>
 
 @can('users.deactive')
-<x-modal-simple modal="deactiveUser" form="formDeactiveUser" method="PUT" title="¿Estás seguro de que quieres desactivar este usuario?" button="Desactivar"></x-modal-simple>
+<x-modal-simple modal="deactiveUser" form="formDeactiveUser" method="PUT" title="¿Estás seguro de que quieres desactivar este usuario?" close="Cancelar" button="Desactivar"></x-modal-simple>
 @endcan
 
 @can('users.active')
-<x-modal-simple modal="activeUser" form="formActiveUser" method="PUT" title="¿Estás seguro de que quieres activar este usuario?" button="Activar"></x-modal-simple>
+<x-modal-simple modal="activeUser" form="formActiveUser" method="PUT" title="¿Estás seguro de que quieres activar este usuario?" close="Cancelar" button="Activar"></x-modal-simple>
 @endcan
 
 @can('users.delete')
-<x-modal-simple modal="deleteUser" form="formDeleteUser" method="DELETE" title="¿Estás seguro de que quieres eliminar este usuario?" button="Eliminar"></x-modal-simple>
+<x-modal-simple modal="deleteUser" form="formDeleteUser" method="DELETE" title="¿Estás seguro de que quieres eliminar este usuario?" close="Cancelar" button="Eliminar"></x-modal-simple>
 @endcan
 
 @endsection

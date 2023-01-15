@@ -7,7 +7,7 @@ use Illuminate\View\Component;
 
 class CardUser extends Component
 {
-    protected $user, $route, $permission;
+    public $user, $route, $permission;
 
     /**
      * Create a new component instance.
@@ -16,7 +16,7 @@ class CardUser extends Component
      */
     public function __construct($user, $route, $permission)
     {
-        $this->user=$user;
+        $this->user=User::with(['roles'])->where('slug', $user)->firstOrFail();
         $this->route=$route;
         $this->permission=$permission;
     }
@@ -28,9 +28,6 @@ class CardUser extends Component
      */
     public function render()
     {
-        $route=$this->route;
-        $permission=$this->permission;
-        $user=User::with(['roles'])->where('slug', $this->user)->firstOrFail();
-        return view('components.card-user', compact('user', 'route', 'permission'));
+        return view('components.card-user');
     }
 }

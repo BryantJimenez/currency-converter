@@ -9,7 +9,7 @@
 		<h1 class="error-number">403</h1>
 		<p class="mini-text">Error de prohibición!</p>
 		<p class="error-text mb-4 mt-1">No tienes permiso para acceder a este sitio!</p>
-		<a href="{{ route('home') }}" class="btn btn-primary mt-5">Volver al Inicio</a>
+		<a href="@if(Route::has('web')){{ route('web') }}@elseif(Route::has('admin')){{ route('admin') }}@elseif(Route::has('login')){{ route('login') }}@else{{ '/' }}@endif" class="btn btn-primary mt-5">Volver al Inicio</a>
 	</div>
 </div>
 

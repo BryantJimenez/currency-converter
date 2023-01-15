@@ -45,17 +45,17 @@
 							<div class="row">
 								<div class="form-group col-12">
 									<label class="col-form-label">Nombre<b class="text-danger">*</b></label>
-									<input class="form-control @error('name') is-invalid @enderror" type="text" name="name" required placeholder="Introduzca un nombre" value="{{ $currency->name }}">
+									<input class="form-control @error('name') is-invalid @enderror" type="text" name="name" required placeholder="Introduzca un nombre" value="{{ old('name', $currency->name) }}">
 								</div>
 
 								<div class="form-group col-12">
 									<label class="col-form-label">ISO<b class="text-danger">*</b></label>
-									<input class="form-control @error('iso') is-invalid @enderror" type="text" name="iso" required placeholder="Introduzca un código ISO" value="{{ $currency->iso }}">
+									<input class="form-control @error('iso') is-invalid @enderror" type="text" name="iso" required placeholder="Introduzca un código ISO" value="{{ old('iso', $currency->iso) }}">
 								</div>
 
 								<div class="form-group col-12">
 									<label class="col-form-label">Simbolo<b class="text-danger">*</b></label>
-									<input class="form-control @error('symbol') is-invalid @enderror" type="text" name="symbol" required placeholder="Introduzca un simbolo" value="{{ $currency->symbol }}">
+									<input class="form-control @error('symbol') is-invalid @enderror" type="text" name="symbol" required placeholder="Introduzca un simbolo" value="{{ old('symbol', $currency->symbol) }}">
 								</div>
 
 								<div class="form-group col-12">

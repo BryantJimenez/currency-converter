@@ -33,6 +33,13 @@ class PermissionsSeeder extends Seeder
         Permission::create(['name' => 'customers.active']);
         Permission::create(['name' => 'customers.deactive']);
 
+        // Contact Permissions
+        Permission::create(['name' => 'contacts.create']);
+
+        // Account Permissions
+        Permission::create(['name' => 'accounts.create']);
+        Permission::create(['name' => 'accounts.edit']);
+
         // Currency Permissions
         Permission::create(['name' => 'currencies.index']);
         Permission::create(['name' => 'currencies.create']);

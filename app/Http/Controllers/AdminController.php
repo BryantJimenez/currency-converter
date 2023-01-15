@@ -60,8 +60,20 @@ class AdminController extends Controller
         }
     }
 
-    public function emailVerifyAdmin(Request $request)
+    public function emailVerifyAdmin(Request $request, $slug=NULL)
     {
+        if (!is_null($slug)) {
+            $ignore=User::where('slug', $slug)->withTrashed()->first();
+            if (!is_null($ignore)) {
+                $count=User::where([['id', '!=', $ignore->id], ['email', request('email')]])->count();
+                if ($count>0) {
+                    return "false";
+                } else {
+                    return "true";
+                }
+            }
+        }
+        
         $count=User::where('email', request('email'))->count();
         if ($count>0) {
             return "false";

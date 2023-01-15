@@ -34,6 +34,7 @@ class CustomerUpdateRequest extends FormRequest
             'name' => 'required|string|min:2|max:191',
             'lastname' => 'required|string|min:2|max:191',
             'dni' => 'required|string|min:1|max:20|'.Rule::unique('users', 'dni')->where('country_id', $country_id)->ignore($this->user->id),
+            'email' => 'nullable|string|email|max:191|'.Rule::unique('users', 'email')->ignore($this->user->id),
             'phone' => 'required|string|min:5|max:15',
             'address' => 'required|string|min:2|max:191',
             'country_id' => 'required|'.Rule::in($countries)

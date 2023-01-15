@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 ///////////////////////////////////////// AUTH ////////////////////////////////////////////////
 Auth::routes(['register' => false]);
-Route::get('/usuarios/email', 'AdminController@emailVerifyAdmin');
+Route::get('/usuarios/email/{slug?}', 'AdminController@emailVerifyAdmin');
 
 ////////////////////////////////////////// WEB ////////////////////////////////////////////////
 Route::get('/', function() {
@@ -58,6 +58,9 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
 		Route::delete('/{user:slug}', 'CustomerController@destroy')->name('customers.delete')->middleware('permission:customers.delete');
 		Route::put('/{user:slug}/activar', 'CustomerController@activate')->name('customers.activate')->middleware('permission:customers.active');
 		Route::put('/{user:slug}/desactivar', 'CustomerController@deactivate')->name('customers.deactivate')->middleware('permission:customers.deactive');
+		Route::post('/{user:slug}/contactos', 'CustomerController@contactStore')->name('customers.contacts.store')->middleware('permission:contacts.create');
+		Route::post('/{user:slug}/cuentas', 'CustomerController@accountStore')->name('customers.accounts.store')->middleware('permission:accounts.create');
+		Route::put('/{user:slug}/cuentas/{account:slug}', 'CustomerController@accountUpdate')->name('customers.accounts.update')->middleware('permission:accounts.edit');
 	});
 
 	// Currencies

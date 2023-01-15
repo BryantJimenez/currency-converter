@@ -39,7 +39,7 @@
 					<div class="col-12 mt-3">
 						@can('currencies.create')
 						<div class="text-right mr-3">
-							<a href="{{ route('currencies.create') }}" class="btn btn-primary">Agregar</a>
+							<a href="{{ route('currencies.create') }}" class="btn btn-sm btn-primary">Agregar</a>
 						</div>
 						@endcan
 
@@ -106,15 +106,15 @@
 </div>
 
 @can('currencies.deactive')
-<x-modal-simple modal="deactiveCurrency" form="formDeactiveCurrency" method="PUT" title="¿Estás seguro de que quieres desactivar esta moneda?" button="Desactivar"></x-modal-simple>
+<x-modal-simple modal="deactiveCurrency" form="formDeactiveCurrency" method="PUT" title="¿Estás seguro de que quieres desactivar esta moneda?" close="Cancelar" button="Desactivar"></x-modal-simple>
 @endcan
 
 @can('currencies.active')
-<x-modal-simple modal="activeCurrency" form="formActiveCurrency" method="PUT" title="¿Estás seguro de que quieres activar esta moneda?" button="Activar"></x-modal-simple>
+<x-modal-simple modal="activeCurrency" form="formActiveCurrency" method="PUT" title="¿Estás seguro de que quieres activar esta moneda?" close="Cancelar" button="Activar"></x-modal-simple>
 @endcan
 
 @can('currencies.delete')
-<x-modal-simple modal="deleteCurrency" form="formDeleteCurrency" method="DELETE" title="¿Estás seguro de que quieres eliminar esta moneda?" button="Eliminar"></x-modal-simple>
+<x-modal-simple modal="deleteCurrency" form="formDeleteCurrency" method="DELETE" title="¿Estás seguro de que quieres eliminar esta moneda?" close="Cancelar" button="Eliminar"></x-modal-simple>
 @endcan
 
 @endsection

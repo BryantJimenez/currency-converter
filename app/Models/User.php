@@ -91,4 +91,12 @@ class User extends Authenticatable
     public function country() {
         return $this->belongsTo(Country::class);
     }
+
+    public function accounts() {
+        return $this->hasMany(Account::class);
+    }
+
+    public function contacts() {
+        return $this->belongsToMany(User::class, 'contacts', 'user_id', 'user_destination_id')->withPivot(['alias'])->withTimestamps();
+    }
 }

@@ -326,3 +326,35 @@ function deleteCurrency(slug) {
   $("#deleteCurrency").modal();
   $('#formDeleteCurrency').attr('action', '/admin/monedas/' + slug);
 }
+
+// Funciones para preguntar
+function contactCustomer(slug, name) {
+  $("#contactCustomer input[name='name']").val(name);
+  $("#contactCustomer").modal();
+  $('#formContactCustomer').attr('action', '/admin/clientes/' + slug + '/contactos');
+}
+
+function accountCustomer(slug, name) {
+  $("#accountCustomer input[name='name']").val(name);
+  $("#accountCustomer").modal();
+  $('#formAccountCustomer').attr('action', '/admin/clientes/' + slug + '/cuentas');
+}
+
+function accountCustomerEdit(slug_user, slug_account, name, bank, number) {
+  $("#accountCustomerEdit input[name='name']").val(name);
+  $("#accountCustomerEdit input[name='bank']").val(bank);
+  $("#accountCustomerEdit input[name='number']").val(number);
+  $("#accountCustomerEdit").modal();
+  $('#formAccountCustomerEdit').attr('action', '/admin/clientes/' + slug_user + '/cuentas/' + slug_account);
+}
+
+// funcion para mostrar/ocultar campos al cambiar la opción
+$('select[name="account_question"]').change(function(event) {
+  if ($(this).val()=='1') {
+    $('.account-data input').attr('disabled', false);
+    $('.account-data').removeClass('d-none');
+  } else {
+    $('.account-data').addClass('d-none');
+    $('.account-data input').attr('disabled', true);
+  }
+});

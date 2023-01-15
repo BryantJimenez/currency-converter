@@ -51,14 +51,14 @@
 
 								<div class="form-group col-lg-6 col-md-6 col-12">
 									<div class="row">
-										<div class="form-group col-lg-12 col-md-12 col-12">
+										<div class="form-group col-12">
 											<label class="col-form-label">Nombre<b class="text-danger">*</b></label>
-											<input class="form-control @error('name') is-invalid @enderror" type="text" name="name" required placeholder="Introduzca un nombre" value="{{ Auth::user()->name }}">
+											<input class="form-control @error('name') is-invalid @enderror" type="text" name="name" required placeholder="Introduzca un nombre" value="{{ old('name', Auth::user()->name) }}">
 										</div>
 
-										<div class="form-group col-lg-12 col-md-12 col-12">
+										<div class="form-group col-12">
 											<label class="col-form-label">Apellido<b class="text-danger">*</b></label>
-											<input class="form-control @error('lastname') is-invalid @enderror" type="text" name="lastname" required placeholder="Introduzca un apellido" value="{{ Auth::user()->lastname }}">
+											<input class="form-control @error('lastname') is-invalid @enderror" type="text" name="lastname" required placeholder="Introduzca un apellido" value="{{ old('lastname', Auth::user()->lastname) }}">
 										</div>
 									</div> 
 								</div>
@@ -70,7 +70,7 @@
 
 								<div class="form-group col-lg-6 col-md-6 col-12">
 									<label class="col-form-label">Teléfono<b class="text-danger">*</b></label>
-									<input class="form-control @error('phone') is-invalid @enderror" type="text" name="phone" required placeholder="Introduzca un teléfono" value="{{ Auth::user()->phone }}" id="phone">
+									<input class="form-control @error('phone') is-invalid @enderror" type="text" name="phone" required placeholder="Introduzca un teléfono" value="{{ old('phone', Auth::user()->phone) }}" id="phone">
 								</div>
 
 								<div class="form-group col-lg-6 col-md-6 col-12">

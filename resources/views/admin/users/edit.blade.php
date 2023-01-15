@@ -51,26 +51,26 @@
 
 								<div class="form-group col-lg-6 col-md-6 col-12">
 									<div class="row">
-										<div class="form-group col-lg-12 col-md-12 col-12">
+										<div class="form-group col-12">
 											<label class="col-form-label">Nombre<b class="text-danger">*</b></label>
-											<input class="form-control @error('name') is-invalid @enderror" type="text" name="name" required placeholder="Introduzca un nombre" value="{{ $user->name }}">
+											<input class="form-control @error('name') is-invalid @enderror" type="text" name="name" required placeholder="Introduzca un nombre" value="{{ old('name', $user->name) }}">
 										</div>
 
-										<div class="form-group col-lg-12 col-md-12 col-12">
+										<div class="form-group col-12">
 											<label class="col-form-label">Apellido<b class="text-danger">*</b></label>
-											<input class="form-control @error('lastname') is-invalid @enderror" type="text" name="lastname" required placeholder="Introduzca un apellido" value="{{ $user->lastname }}">
+											<input class="form-control @error('lastname') is-invalid @enderror" type="text" name="lastname" required placeholder="Introduzca un apellido" value="{{ old('lastname', $user->lastname) }}">
 										</div>
 									</div> 
 								</div>
 
 								<div class="form-group col-lg-6 col-md-6 col-12">
 									<label class="col-form-label">Correo Electrónico</label>
-									<input class="form-control" type="text" disabled value="{{ $user->email }}">
+									<input class="form-control text-dark" type="text" disabled value="{{ $user->email }}">
 								</div>
 
 								<div class="form-group col-lg-6 col-md-6 col-12">
 									<label class="col-form-label">Teléfono<b class="text-danger">*</b></label>
-									<input class="form-control @error('phone') is-invalid @enderror" type="text" name="phone" required placeholder="Introduzca un teléfono" value="{{ $user->phone }}" id="phone">
+									<input class="form-control @error('phone') is-invalid @enderror" type="text" name="phone" required placeholder="Introduzca un teléfono" value="{{ old('phone', $user->phone) }}" id="phone">
 								</div>
 
 								<div class="form-group col-lg-6 col-md-6 col-12">
@@ -78,7 +78,7 @@
 									<select class="form-control @error('type') is-invalid @enderror" name="type" required>
 										<option value="">Seleccione</option>
 										@foreach($roles as $role)
-										<option @if(!is_null($user->roles) && $user->hasRole($user->roles[0]->name) && $user->roles[0]->name==$role) selected @endif>{{ $role }}</option>
+										<option @if(old('type')==$role || (is_null(old('type')) && $user->hasRole($role))) selected @endif>{{ $role }}</option>
 										@endforeach
 									</select>
 								</div>
@@ -86,8 +86,8 @@
 								<div class="form-group col-lg-6 col-md-6 col-12">
 									<label class="col-form-label">Estado<b class="text-danger">*</b></label>
 									<select class="form-control @error('state') is-invalid @enderror" name="state" required>
-										<option value="1" @if($user->state=="Activo") selected @endif>Activo</option>
-										<option value="0" @if($user->state=="Inactivo") selected @endif>Inactivo</option>
+										<option value="1" @if(old('state', $user->state)=="Activo" || old('state', $user->state)=="1") selected @endif>Activo</option>
+										<option value="0" @if(old('state', $user->state)=="Inactivo" || old('state', $user->state)=="0") selected @endif>Inactivo</option>
 									</select>
 								</div>
 

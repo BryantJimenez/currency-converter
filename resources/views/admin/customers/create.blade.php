@@ -4,10 +4,10 @@
 
 @section('breadcrumb')
 <li class="breadcrumb-item">
-    <a href="javascript:void(0);">Clientes</a>
+	<a href="javascript:void(0);">Clientes</a>
 </li>
 <li class="breadcrumb-item active" aria-current="page">
-    <a href="javascript:void(0);">Registro</a>
+	<a href="javascript:void(0);">Registro</a>
 </li>
 @endsection
 
@@ -21,16 +21,16 @@
 
 <div class="row layout-top-spacing">
 	<div class="col-12 layout-spacing">
-    	<div class="statbox widget box box-shadow">
-	        <div class="widget-header">
-	            <div class="row">
-	                <div class="col-12">
-	                    <h4>Crear Cliente</h4>
-	                </div>
-	            </div>
-	        </div>
-	        <div class="widget-content widget-content-area shadow-none">
-	        	<div class="row">
+		<div class="statbox widget box box-shadow">
+			<div class="widget-header">
+				<div class="row">
+					<div class="col-12">
+						<h4>Crear Cliente</h4>
+					</div>
+				</div>
+			</div>
+			<div class="widget-content widget-content-area shadow-none">
+				<div class="row">
 					<div class="col-12">
 
 						@include('admin.partials.errors')
@@ -46,12 +46,12 @@
 
 								<div class="form-group col-lg-6 col-md-6 col-12">
 									<div class="row">
-										<div class="form-group col-lg-12 col-md-12 col-12">
+										<div class="form-group col-12">
 											<label class="col-form-label">Nombre<b class="text-danger">*</b></label>
 											<input class="form-control @error('name') is-invalid @enderror" type="text" name="name" required placeholder="Introduzca un nombre" value="{{ old('name') }}">
 										</div>
 
-										<div class="form-group col-lg-12 col-md-12 col-12">
+										<div class="form-group col-12">
 											<label class="col-form-label">Apellido<b class="text-danger">*</b></label>
 											<input class="form-control @error('lastname') is-invalid @enderror" type="text" name="lastname" required placeholder="Introduzca un apellido" value="{{ old('lastname') }}">
 										</div>
@@ -74,8 +74,8 @@
 								</div>
 
 								<div class="form-group col-lg-6 col-md-6 col-12">
-									<label class="col-form-label">Correo Electrónico<b class="text-danger">*</b></label>
-									<input class="form-control @error('email') is-invalid @enderror" type="email" name="email" required placeholder="Introduzca un correo electrónico" value="{{ old('email') }}">
+									<label class="col-form-label">Correo Electrónico (Opcional)</label>
+									<input class="form-control @error('email') is-invalid @enderror" type="email" name="email" placeholder="Introduzca un correo electrónico" value="{{ old('email') }}">
 								</div>
 
 								<div class="form-group col-lg-6 col-md-6 col-12">
@@ -83,9 +83,27 @@
 									<input class="form-control @error('phone') is-invalid @enderror" type="text" name="phone" required placeholder="Introduzca un teléfono" value="{{ old('phone') }}" id="phone">
 								</div>
 
-								<div class="form-group col-12">
+								<div class="form-group col-lg-6 col-md-6 col-12">
 									<label class="col-form-label">Dirección<b class="text-danger">*</b></label>
 									<input class="form-control @error('address') is-invalid @enderror" type="text" name="address" required placeholder="Introduzca una dirección" value="{{ old('address') }}">
+								</div>
+
+								<div class="form-group col-lg-6 col-md-6 col-12">
+									<label class="col-form-label">Agregar Cuenta Bancaria?<b class="text-danger">*</b></label>
+									<select class="form-control @error('account_question') is-invalid @enderror" name="account_question" required>
+										<option value="0" @if(old('account_question')=='0') selected @endif>No</option>
+										<option value="1" @if(old('account_question')=='1') selected @endif>Si</option>
+									</select>
+								</div>
+
+								<div class="form-group col-lg-6 col-md-6 col-12 account-data @if(old('account_question')!='1') d-none @endif">
+									<label class="col-form-label">Banco<b class="text-danger">*</b></label>
+									<input class="form-control @error('bank') is-invalid @enderror" type="text" name="bank" required placeholder="Introduzca un banco" value="{{ old('bank') }}">
+								</div>
+
+								<div class="form-group col-lg-6 col-md-6 col-12 account-data @if(old('account_question')!='1') d-none @endif">
+									<label class="col-form-label">Número de Cuenta<b class="text-danger">*</b></label>
+									<input class="form-control number @error('number') is-invalid @enderror" type="text" name="number" required placeholder="Introduzca un número de cuenta" value="{{ old('number') }}">
 								</div>
 
 								<div class="form-group col-12">
@@ -98,8 +116,8 @@
 						</form>
 					</div>
 				</div>
-	        </div>
-	    </div>
+			</div>
+		</div>
 	</div>
 </div>
 

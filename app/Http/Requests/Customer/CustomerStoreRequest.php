@@ -27,6 +27,7 @@ class CustomerStoreRequest extends FormRequest
     public function rules()
     {
         $countries=Country::all()->pluck('code');
+        $account=($this->account_question=='1') ? true : false;
         $country=Country::where('code', $this->country_id)->first();
         $country_id=(!is_null($country)) ? $country->id : NULL;
         return [
@@ -34,10 +35,13 @@ class CustomerStoreRequest extends FormRequest
             'name' => 'required|string|min:2|max:191',
             'lastname' => 'required|string|min:2|max:191',
             'dni' => 'required|string|min:1|max:20|'.Rule::unique('users', 'dni')->where('country_id', $country_id),
-            'email' => 'required|string|email|max:191|unique:users,email',
+            'email' => 'nullable|string|email|max:191|unique:users,email',
             'phone' => 'required|string|min:5|max:15',
             'address' => 'required|string|min:2|max:191',
-            'country_id' => 'required|'.Rule::in($countries)
+            'country_id' => 'required|'.Rule::in($countries),
+            'account_question' => 'required|'.Rule::in(['0', '1']),
+            'bank' => Rule::requiredIf($account).'|string|min:2|max:191',
+            'number' => Rule::requiredIf($account).'|string|min:2|max:191'
         ];
     }
 }

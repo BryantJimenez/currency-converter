@@ -9,7 +9,7 @@
 		<h1 class="error-number">419</h1>
 		<p class="mini-text">Sesión expirada!</p>
 		<p class="error-text mb-4 mt-1">Tu sesión ha expirado!</p>
-		<a href="{{ route('home') }}" class="btn btn-primary mt-5">Volver al Inicio</a>
+		<a href="@if(Route::has('web')){{ route('web') }}@elseif(Route::has('admin')){{ route('admin') }}@elseif(Route::has('login')){{ route('login') }}@else{{ '/' }}@endif" class="btn btn-primary mt-5">Volver al Inicio</a>
 	</div>
 </div>
 
