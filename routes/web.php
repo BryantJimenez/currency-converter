@@ -75,4 +75,10 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
 		Route::put('/{currency:slug}/activar', 'CurrencyController@activate')->name('currencies.activate')->middleware('permission:currencies.active');
 		Route::put('/{currency:slug}/desactivar', 'CurrencyController@deactivate')->name('currencies.deactivate')->middleware('permission:currencies.deactive');
 	});
+
+	// Settings
+	Route::prefix('ajustes')->group(function () {
+		Route::get('/editar', 'SettingController@edit')->name('settings.edit')->middleware('permission:settings.edit');
+		Route::put('/', 'SettingController@update')->name('settings.update')->middleware('permission:settings.edit');
+	});
 });

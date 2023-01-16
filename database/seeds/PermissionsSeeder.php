@@ -13,40 +13,64 @@ class PermissionsSeeder extends Seeder
     public function run()
     {
         // Permission to Access the Administrative Panel
-        Permission::create(['name' => 'dashboard']);
+        $permission=Permission::where('name', 'dashboard')->first();
+        if (is_null($permission)) {
+            Permission::create(['name' => 'dashboard']);
+        }
 
         // User Permissions
-        Permission::create(['name' => 'users.index']);
-        Permission::create(['name' => 'users.create']);
-        Permission::create(['name' => 'users.show']);
-        Permission::create(['name' => 'users.edit']);
-        Permission::create(['name' => 'users.delete']);
-        Permission::create(['name' => 'users.active']);
-        Permission::create(['name' => 'users.deactive']);
+        $permission=Permission::where('name', 'users.index')->first();
+        if (is_null($permission)) {
+            Permission::create(['name' => 'users.index']);
+            Permission::create(['name' => 'users.create']);
+            Permission::create(['name' => 'users.show']);
+            Permission::create(['name' => 'users.edit']);
+            Permission::create(['name' => 'users.delete']);
+            Permission::create(['name' => 'users.active']);
+            Permission::create(['name' => 'users.deactive']);
+        }
 
         // Customer Permissions
-        Permission::create(['name' => 'customers.index']);
-        Permission::create(['name' => 'customers.create']);
-        Permission::create(['name' => 'customers.show']);
-        Permission::create(['name' => 'customers.edit']);
-        Permission::create(['name' => 'customers.delete']);
-        Permission::create(['name' => 'customers.active']);
-        Permission::create(['name' => 'customers.deactive']);
+        $permission=Permission::where('name', 'customers.index')->first();
+        if (is_null($permission)) {
+            Permission::create(['name' => 'customers.index']);
+            Permission::create(['name' => 'customers.create']);
+            Permission::create(['name' => 'customers.show']);
+            Permission::create(['name' => 'customers.edit']);
+            Permission::create(['name' => 'customers.delete']);
+            Permission::create(['name' => 'customers.active']);
+            Permission::create(['name' => 'customers.deactive']);
+        }
 
         // Contact Permissions
-        Permission::create(['name' => 'contacts.create']);
+        $permission=Permission::where('name', 'contacts.create')->first();
+        if (is_null($permission)) {
+            Permission::create(['name' => 'contacts.create']);
+        }
 
         // Account Permissions
-        Permission::create(['name' => 'accounts.create']);
-        Permission::create(['name' => 'accounts.edit']);
+        $permission=Permission::where('name', 'accounts.create')->first();
+        if (is_null($permission)) {
+            Permission::create(['name' => 'accounts.create']);
+            Permission::create(['name' => 'accounts.edit']);
+        }
 
         // Currency Permissions
-        Permission::create(['name' => 'currencies.index']);
-        Permission::create(['name' => 'currencies.create']);
-        Permission::create(['name' => 'currencies.show']);
-        Permission::create(['name' => 'currencies.edit']);
-        Permission::create(['name' => 'currencies.delete']);
-        Permission::create(['name' => 'currencies.active']);
-        Permission::create(['name' => 'currencies.deactive']);
+        $permission=Permission::where('name', 'currencies.index')->first();
+        if (is_null($permission)) {
+            Permission::create(['name' => 'currencies.index']);
+            Permission::create(['name' => 'currencies.create']);
+            Permission::create(['name' => 'currencies.show']);
+            Permission::create(['name' => 'currencies.edit']);
+            Permission::create(['name' => 'currencies.delete']);
+            Permission::create(['name' => 'currencies.active']);
+            Permission::create(['name' => 'currencies.deactive']);
+        }
+
+        // Setting Permissions
+        $permission=Permission::where('name', 'settings.edit')->first();
+        if (is_null($permission)) {
+            Permission::create(['name' => 'settings.edit']);
+        }
     }
 }

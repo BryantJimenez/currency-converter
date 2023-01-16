@@ -160,7 +160,9 @@ return [
         'bank'                  => 'banco',
         'number'                => 'número',
         'iso'                   => 'iso',
-        'symbol'                => 'simbolo'
+        'symbol'                => 'simbolo',
+        'commission'            => 'comisión',
+        'iva'                   => 'iva'
     ],
 ];
 ?>

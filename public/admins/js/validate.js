@@ -192,12 +192,9 @@ $(document).ready(function(){
 		if ($("#formCustomer").length) {
 			$("#formCustomer").validate().destroy();
 		}
-		var slug='', account_question=false;
+		var slug='';
 		if ($("button[action='customer'][slug]").length) {
 			slug=$(this).attr('slug');
-		}
-		if ($("select[name='account_question']").val()=='1') {
-			account_question=true;
 		}
 		$("#formCustomer").validate({
 			rules:
@@ -252,13 +249,17 @@ $(document).ready(function(){
 				},
 
 				bank: {
-					required: account_question,
+					required: function(element) {
+						return ($("select[name='account_question']").val()=='1');
+					},
 					minlength: 2,
 					maxlength: 191
 				},
 
 				number: {
-					required: account_question,
+					required: function(element) {
+						return ($("select[name='account_question']").val()=='1');
+					},
 					minlength: 2,
 					maxlength: 191
 				}
@@ -309,6 +310,13 @@ $(document).ready(function(){
 			{
 				customer_id: {
 					required: 'Seleccione una opción.'
+				}
+			},
+			errorPlacement: function(error, element) {
+				if (element.hasClass('custom-error')) {
+					error.appendTo('.custom-error-'+$(element).attr('name'));
+				} else {
+					error.insertAfter(element);
 				}
 			},
 			submitHandler: function(form) {
@@ -388,6 +396,39 @@ $(document).ready(function(){
 			},
 			submitHandler: function(form) {
 				$("button[action='currency']").attr('disabled', true);
+				form.submit();
+			}
+		});
+	});
+
+	// Settings
+	$("button[action='setting']").on("click",function(){
+		$("#formSetting").validate({
+			rules:
+			{
+				commission: {
+					required: true,
+					number: true,
+					min: 0,
+					max: 100
+				},
+
+				iva: {
+					required: true,
+					number: true,
+					min: 0,
+					max: 100
+				}
+			},
+			errorPlacement: function(error, element) {
+				if (element.hasClass('custom-error')) {
+					error.appendTo('.custom-error-'+$(element).attr('name'));
+				} else {
+					error.insertAfter(element);
+				}
+			},
+			submitHandler: function(form) {
+				$("button[action='setting']").attr('disabled', true);
 				form.submit();
 			}
 		});

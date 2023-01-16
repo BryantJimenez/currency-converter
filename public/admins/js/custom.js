@@ -269,6 +269,18 @@ $(document).ready(function() {
       maxDate : "today"
     });
   }
+
+  // Touchspin
+  if ($('.percentage-decimal').length) {
+    $(".percentage-decimal").TouchSpin({
+      min: 0,
+      max: 100,
+      step: 0.01,
+      decimals: 2,
+      buttondown_class: 'btn btn-primary rounded-0 h-100 mr-0',
+      buttonup_class: 'btn btn-primary rounded-0 h-100 mr-0'
+    });
+  }
 });
 
 // funcion para cambiar el input hidden al cambiar el switch de estado
