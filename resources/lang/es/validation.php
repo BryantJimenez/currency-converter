@@ -161,6 +161,7 @@ return [
         'number'                => 'número',
         'iso'                   => 'iso',
         'symbol'                => 'simbolo',
+        'side'                  => 'lado',
         'commission'            => 'comisión',
         'iva'                   => 'iva'
     ],

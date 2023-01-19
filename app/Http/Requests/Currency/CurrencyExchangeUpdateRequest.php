@@ -2,11 +2,12 @@
 
 namespace App\Http\Requests\Currency;
 
+use App\Models\Currency\Currency;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
-class CurrencyUpdateRequest extends FormRequest
+class CurrencyExchangeUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,11 +26,12 @@ class CurrencyUpdateRequest extends FormRequest
      */
     public function rules()
     {
+        $currencies=Currency::where('id', '!=', $this->currency->id)->get()->pluck('slug');
         return [
-            'name' => 'required|string|min:2|max:191|'.Rule::unique('currencies', 'name')->ignore($this->currency->id),
-            'iso' => 'required|string|min:3|max:3|'.Rule::unique('currencies', 'iso')->ignore($this->currency->id),
-            'symbol' => 'required|string|min:1|max:3',
-            'side' => 'required|'.Rule::in(['1', '2'])
+            'conversion_rate' => 'required|array',
+            'conversion_rate.*' => 'required|numeric|regex:/^\d+(\.\d{1,2})?$/|min:0',
+            'currency_id' => 'required|array',
+            'currency_id.*' => 'required|'.Rule::in($currencies)
         ];
     }
 }

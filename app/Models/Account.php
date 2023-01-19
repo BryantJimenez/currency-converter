@@ -37,7 +37,9 @@ class Account extends Model
      */
     public function resolveRouteBinding($value, $field = null)
     {
-        $account=$this->where($field, $value)->first();
+        $account=$this->with(['user' => function($query) {
+            $query->withTrashed();
+        }])->where($field, $value)->first();
         if (!is_null($account)) {
             return $account;
         }

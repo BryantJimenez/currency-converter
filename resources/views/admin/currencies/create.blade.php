@@ -38,19 +38,28 @@
 						<form action="{{ route('currencies.store') }}" method="POST" class="form" id="formCurrency">
 							@csrf
 							<div class="row">
-								<div class="form-group col-12">
+								<div class="form-group col-lg-6 col-md-6 col-12">
 									<label class="col-form-label">Nombre<b class="text-danger">*</b></label>
 									<input class="form-control @error('name') is-invalid @enderror" type="text" name="name" required placeholder="Introduzca un nombre" value="{{ old('name') }}">
 								</div>
 
-								<div class="form-group col-12">
+								<div class="form-group col-lg-6 col-md-6 col-12">
 									<label class="col-form-label">ISO<b class="text-danger">*</b></label>
 									<input class="form-control @error('iso') is-invalid @enderror" type="text" name="iso" required placeholder="Introduzca el código ISO" value="{{ old('iso') }}">
 								</div>
 
-								<div class="form-group col-12">
+								<div class="form-group col-lg-6 col-md-6 col-12">
 									<label class="col-form-label">Simbolo<b class="text-danger">*</b></label>
 									<input class="form-control @error('symbol') is-invalid @enderror" type="text" name="symbol" required placeholder="Introduzca un simbolo" value="{{ old('symbol') }}">
+								</div>
+
+								<div class="form-group col-lg-6 col-md-6 col-12">
+									<label class="col-form-label">Lado del Simbolo<b class="text-danger">*</b></label>
+									<select class="form-control @error('side') is-invalid @enderror" name="side" required>
+										<option value="">Seleccione</option>
+										<option value="1" @if(old('side')=='1') selected @endif>Derecha</option>
+										<option value="2" @if(old('side')=='2') selected @endif>Izquierda</option>
+									</select>
 								</div>
 
 								<div class="form-group col-12">

@@ -19,6 +19,7 @@ class CreateCurrenciesTable extends Migration
             $table->string('slug')->unique();
             $table->string('iso');
             $table->string('symbol');
+            $table->enum('side', [1, 2])->default(1);
             $table->enum('state', [0, 1])->default(1);
             $table->timestamps();
             $table->softDeletes();

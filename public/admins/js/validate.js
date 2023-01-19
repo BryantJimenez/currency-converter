@@ -391,7 +391,42 @@ $(document).ready(function(){
 				symbol: {
 					required: true,
 					minlength: 1,
-					maxlength: 2
+					maxlength: 3
+				},
+
+				side: {
+					required: true
+				}
+			},
+			messages:
+			{
+				side: {
+					required: 'Seleccione una opción.'
+				}
+			},
+			submitHandler: function(form) {
+				$("button[action='currency']").attr('disabled', true);
+				form.submit();
+			}
+		});
+	});
+
+	// Currencies Exchange
+	$("button[action='currency']").on("click",function(){
+		$("#formCurrencyExchange").validate({
+			rules:
+			{
+				'conversion_rate[]': {
+					required: true,
+					number: true,
+					min: 0
+				}
+			},
+			errorPlacement: function(error, element) {
+				if (element.hasClass('custom-error')) {
+					error.appendTo('.custom-error-'+$(element).attr('id'));
+				} else {
+					error.insertAfter(element);
 				}
 			},
 			submitHandler: function(form) {

@@ -74,6 +74,8 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
 		Route::delete('/{currency:slug}', 'CurrencyController@destroy')->name('currencies.delete')->middleware('permission:currencies.delete');
 		Route::put('/{currency:slug}/activar', 'CurrencyController@activate')->name('currencies.activate')->middleware('permission:currencies.active');
 		Route::put('/{currency:slug}/desactivar', 'CurrencyController@deactivate')->name('currencies.deactivate')->middleware('permission:currencies.deactive');
+		Route::get('/{currency:slug}/intercambios', 'CurrencyController@exchangesEdit')->name('currencies.exchanges.edit')->middleware('permission:exchanges.edit');
+		Route::put('/{currency:slug}/intercambios', 'CurrencyController@exchangesUpdate')->name('currencies.exchanges.update')->middleware('permission:exchanges.edit');
 	});
 
 	// Settings

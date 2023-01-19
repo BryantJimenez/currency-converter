@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Currency;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -11,7 +11,22 @@ class Currency extends Model
 {
     use SoftDeletes, HasSlug;
 
-    protected $fillable = ['name', 'slug', 'iso', 'symbol', 'state'];
+    protected $fillable = ['name', 'slug', 'iso', 'symbol', 'side', 'state'];
+
+    /**
+     * Get the side.
+     *
+     * @return string
+     */
+    public function getSideAttribute($value)
+    {
+        if ($value=='1') {
+            return 'Derecha';
+        } elseif ($value=='2') {
+            return 'Izquierda';
+        }
+        return 'Desconocido';
+    }
 
     /**
      * Get the state.
@@ -37,7 +52,7 @@ class Currency extends Model
      */
     public function resolveRouteBinding($value, $field = null)
     {
-        $currency=$this->where($field, $value)->first();
+        $currency=$this->with(['exchanges'])->where($field, $value)->first();
         if (!is_null($currency)) {
             return $currency;
         }
@@ -48,5 +63,13 @@ class Currency extends Model
     public function getSlugOptions() : SlugOptions
     {
         return SlugOptions::create()->generateSlugsFrom('name')->saveSlugsTo('slug')->slugsShouldBeNoLongerThan(191)->doNotGenerateSlugsOnUpdate();
+    }
+
+    public function exchanges() {
+        return $this->belongsToMany(Currency::class, 'exchanges', 'currency_id', 'currency_exchange_id')->withPivot(['conversion_rate'])->withTimestamps();
+    }
+
+    public function exchanges_reverse() {
+        return $this->belongsToMany(Currency::class, 'exchanges', 'currency_exchange_id', 'currency_id')->withPivot(['conversion_rate'])->withTimestamps();
     }
 }

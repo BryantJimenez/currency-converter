@@ -1,10 +1,13 @@
 @extends('layouts.admin')
 
-@section('title', 'Editar Moneda')
+@section('title', 'Editar Tasas de Intercambio de Moneda')
 
 @section('breadcrumb')
 <li class="breadcrumb-item">
 	<a href="javascript:void(0);">Monedas</a>
+</li>
+<li class="breadcrumb-item">
+	<a href="javascript:void(0);">Tasas de Intercambio</a>
 </li>
 <li class="breadcrumb-item active" aria-current="page">
 	<a href="javascript:void(0);">Editar</a>
@@ -13,6 +16,7 @@
 
 @section('links')
 <link rel="stylesheet" href="{{ asset('/admins/css/elements/alert.css') }}">
+<link rel="stylesheet" href="{{ asset('/admins/vendor/touchspin/jquery.bootstrap-touchspin.min.css') }}">
 <link href="{{ asset('/admins/vendor/sweetalerts/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('/admins/vendor/sweetalerts/sweetalert.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('/admins/css/components/custom-sweetalert.css') }}" rel="stylesheet" type="text/css" />
@@ -27,7 +31,7 @@
 			<div class="widget-header">
 				<div class="row">
 					<div class="col-12">
-						<h4>Editar Moneda</h4>
+						<h4>Editar Tasas de Intercambio de Moneda</h4>
 					</div>
 				</div>
 			</div>
@@ -39,33 +43,29 @@
 						@include('admin.partials.errors')
 
 						<p>Campos obligatorios (<b class="text-danger">*</b>)</p>
-						<form action="{{ route('currencies.update', ['currency' => $currency->slug]) }}" method="POST" class="form" id="formCurrency">
+						<form action="{{ route('currencies.exchanges.update', ['currency' => $currency->slug]) }}" method="POST" class="form" id="formCurrencyExchange">
 							@csrf
 							@method('PUT')
 							<div class="row">
-								<div class="form-group col-lg-6 col-md-6 col-12">
-									<label class="col-form-label">Nombre<b class="text-danger">*</b></label>
-									<input class="form-control @error('name') is-invalid @enderror" type="text" name="name" required placeholder="Introduzca un nombre" value="{{ old('name', $currency->name) }}">
+								@foreach($exchanges as $exchange)
+								<div class="form-group col-lg-9 col-md-8 col-12">
+									<label class="col-form-label">Conversión</label>
+									<input class="form-control text-dark" type="text" disabled value="{{ $currency->name.' ('.$currency->iso.') a '.$exchange->name.' ('.$exchange->iso.')' }}">
+									<input type="hidden" name="currency_id[{{ $loop->index }}]" value="{{ old('currency_id.'.$loop->index, $exchange->slug) }}">
 								</div>
 
-								<div class="form-group col-lg-6 col-md-6 col-12">
-									<label class="col-form-label">ISO<b class="text-danger">*</b></label>
-									<input class="form-control @error('iso') is-invalid @enderror" type="text" name="iso" required placeholder="Introduzca un código ISO" value="{{ old('iso', $currency->iso) }}">
+								<div class="form-group col-lg-3 col-md-4 col-12">
+									<label class="col-form-label">Tasa de Conversión<b class="text-danger">*</b></label>
+									<input class="form-control min-decimal custom-error @error('conversion_rate.'.$loop->index) is-invalid @enderror" type="text" name="conversion_rate[{{ $loop->index }}]" required placeholder="Introduzca una tasa" value="{{ old('conversion_rate.'.$loop->index, $exchange['exchanges_reverse']->first()['pivot']->conversion_rate ?? '') }}" id="{{ 'conversion-rate-'.$loop->index }}">
+									<div class="custom-error-conversion-rate-{{ $loop->index }}"></div>
 								</div>
 
-								<div class="form-group col-lg-6 col-md-6 col-12">
-									<label class="col-form-label">Simbolo<b class="text-danger">*</b></label>
-									<input class="form-control @error('symbol') is-invalid @enderror" type="text" name="symbol" required placeholder="Introduzca un simbolo" value="{{ old('symbol', $currency->symbol) }}">
+								@if(!$loop->last)
+								<div class="col-12">
+									<hr>
 								</div>
-
-								<div class="form-group col-lg-6 col-md-6 col-12">
-									<label class="col-form-label">Lado del Simbolo<b class="text-danger">*</b></label>
-									<select class="form-control @error('side') is-invalid @enderror" name="side" required>
-										<option value="">Seleccione</option>
-										<option value="1" @if(old('side', $currency->side)=="Derecha" || old('side', $currency->side)=="1") selected @endif>Derecha</option>
-										<option value="2" @if(old('side', $currency->side)=="Izquierda" || old('side', $currency->side)=="2") selected @endif>Izquierda</option>
-									</select>
-								</div>
+								@endif
+								@endforeach
 
 								<div class="form-group col-12">
 									<div class="btn-group" role="group">
@@ -87,6 +87,7 @@
 @endsection
 
 @section('scripts')
+<script src="{{ asset('/admins/vendor/touchspin/jquery.bootstrap-touchspin.min.js') }}"></script>
 <script src="{{ asset('/admins/vendor/validate/jquery.validate.js') }}"></script>
 <script src="{{ asset('/admins/vendor/validate/additional-methods.js') }}"></script>
 <script src="{{ asset('/admins/vendor/validate/messages_es.js') }}"></script>

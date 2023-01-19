@@ -271,6 +271,17 @@ $(document).ready(function() {
   }
 
   // Touchspin
+  if ($('.min-decimal').length) {
+    $(".min-decimal").TouchSpin({
+      min: 0,
+      max: 999999999,
+      step: 0.01,
+      decimals: 2,
+      buttondown_class: 'btn btn-primary rounded-0 h-100 mr-0',
+      buttonup_class: 'btn btn-primary rounded-0 h-100 mr-0'
+    });
+  }
+
   if ($('.percentage-decimal').length) {
     $(".percentage-decimal").TouchSpin({
       min: 0,

@@ -3,6 +3,8 @@
 namespace App\Http\Requests\Currency;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class CurrencyStoreRequest extends FormRequest
 {
@@ -26,7 +28,8 @@ class CurrencyStoreRequest extends FormRequest
         return [
             'name' => 'required|string|min:2|max:191|unique:currencies,name',
             'iso' => 'required|string|min:3|max:3|unique:currencies,iso',
-            'symbol' => 'required|string|min:1|max:2'
+            'symbol' => 'required|string|min:1|max:3',
+            'side' => 'required|'.Rule::in(['1', '2'])
         ];
     }
 }

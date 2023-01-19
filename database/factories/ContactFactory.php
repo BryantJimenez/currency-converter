@@ -8,7 +8,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Contact::class, function (Faker $faker) {
 	$user=User::role(['Cliente'])->inRandomOrder()->first();
-	$users=User::role(['Cliente'])->where('id', '!=', $user->id)->get();
+	$users=User::role(['Cliente'])->where('id', '!=', $user->id)->get()->pluck('id');
     return [
         'alias' => $faker->word,
         'user_id' => $user->id,

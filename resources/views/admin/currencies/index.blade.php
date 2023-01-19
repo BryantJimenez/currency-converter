@@ -50,8 +50,9 @@
 									<th>Nombre</th>
 									<th>ISO</th>
 									<th>Simbolo</th>
+									<th>Lado del Simbolo</th>
 									<th>Estado</th>
-                                    @if(auth()->user()->can('currencies.edit') || auth()->user()->can('currencies.active') || auth()->user()->can('currencies.deactive') || auth()->user()->can('currencies.delete'))
+                                    @if(auth()->user()->can('currencies.show') || auth()->user()->can('currencies.edit') || auth()->user()->can('currencies.active') || auth()->user()->can('currencies.deactive') || auth()->user()->can('currencies.delete'))
 									<th class="no-content">Acciones</th>
 									@endif
                                 </tr>
@@ -63,13 +64,24 @@
 									<td>{{ $currency->name }}</td>
 									<td>{{ $currency->iso }}</td>
 									<td>{{ $currency->symbol }}</td>
+									<td>{{ $currency->side }}</td>
 									<td>{!! state($currency->state) !!}</td>
-									@if(auth()->user()->can('currencies.edit') || auth()->user()->can('currencies.active') || auth()->user()->can('currencies.deactive') || auth()->user()->can('currencies.delete'))
+									@if(auth()->user()->can('currencies.show') || auth()->user()->can('currencies.edit') || auth()->user()->can('currencies.active') || auth()->user()->can('currencies.deactive') || auth()->user()->can('currencies.delete'))
 									<td>
 										<div class="btn-group btn-svg-sm" role="group">
+											@can('currencies.show')
+											<a href="{{ route('currencies.show', ['currency' => $currency->slug]) }}" class="btn btn-primary btn-sm bs-tooltip mr-0" title="Detalles">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+											</a>
+											@endcan
 											@can('currencies.edit')
 											<a href="{{ route('currencies.edit', ['currency' => $currency->slug]) }}" class="btn btn-info btn-sm bs-tooltip mr-0" title="Editar">
 												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+											</a>
+											@endcan
+											@can('exchanges.edit')
+											<a href="{{ route('currencies.exchanges.edit', ['currency' => $currency->slug]) }}" class="btn btn-secondary btn-sm bs-tooltip mr-0" title="Editar Tasas de Intercambio">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-repeat"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>
 											</a>
 											@endcan
 											@if($currency->state=='Activo')

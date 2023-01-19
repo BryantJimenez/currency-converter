@@ -67,6 +67,12 @@ class PermissionsSeeder extends Seeder
             Permission::create(['name' => 'currencies.deactive']);
         }
 
+        // Exchange Permissions
+        $permission=Permission::where('name', 'exchanges.edit')->first();
+        if (is_null($permission)) {
+            Permission::create(['name' => 'exchanges.edit']);
+        }
+
         // Setting Permissions
         $permission=Permission::where('name', 'settings.edit')->first();
         if (is_null($permission)) {
