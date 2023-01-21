@@ -271,12 +271,34 @@ $(document).ready(function() {
   }
 
   // Touchspin
+  if ($('.decimal').length) {
+    $(".decimal").TouchSpin({
+      min: 0,
+      max: 999999999,
+      step: 0.50,
+      decimals: 2,
+      buttondown_class: 'btn btn-primary rounded-0 h-100 mr-0',
+      buttonup_class: 'btn btn-primary rounded-0 h-100 mr-0'
+    });
+  }
+
   if ($('.min-decimal').length) {
     $(".min-decimal").TouchSpin({
       min: 0,
       max: 999999999,
       step: 0.01,
       decimals: 2,
+      buttondown_class: 'btn btn-primary rounded-0 h-100 mr-0',
+      buttonup_class: 'btn btn-primary rounded-0 h-100 mr-0'
+    });
+  }
+
+  if ($('.conversion-rate-min-decimal').length) {
+    $(".conversion-rate-min-decimal").TouchSpin({
+      min: 0,
+      max: 999999999,
+      step: 0.0001,
+      decimals: 4,
       buttondown_class: 'btn btn-primary rounded-0 h-100 mr-0',
       buttonup_class: 'btn btn-primary rounded-0 h-100 mr-0'
     });
@@ -345,6 +367,11 @@ function deleteCustomer(slug) {
   $('#formDeleteCustomer').attr('action', '/admin/clientes/' + slug);
 }
 
+function deleteQuote(id) {
+  $("#deleteQuote").modal();
+  $('#formDeleteQuote').attr('action', '/admin/cotizaciones/' + id);
+}
+
 function deleteCurrency(slug) {
   $("#deleteCurrency").modal();
   $('#formDeleteCurrency').attr('action', '/admin/monedas/' + slug);
@@ -381,3 +408,22 @@ $('select[name="account_question"]').change(function(event) {
     $('.account-data input').attr('disabled', true);
   }
 });
+
+// Funcion para calcular la cotización con Livewire
+function calculateCuote() {
+  var currencySource='', currencyDestination='', type='', amount=0.00;
+  if ($('select[name="currency_source_id"]').val()!='') {
+    currencySource=$('select[name="currency_source_id"]').val();
+  }
+  if ($('select[name="currency_destination_id"]').val()!='') {
+    currencyDestination=$('select[name="currency_destination_id"]').val();
+  }
+  if ($('select[name="type_operation"]').val()!='') {
+    type=$('select[name="type_operation"]').val();
+  }
+  if ($('input[name="amount"]').val()!='') {
+    amount=$('input[name="amount"]').val();
+  }
+  var data={"currency_source": currencySource, "currency_destination": currencyDestination, "type": type, "amount": amount};
+  Livewire.emit('calculateCuote', data);
+}

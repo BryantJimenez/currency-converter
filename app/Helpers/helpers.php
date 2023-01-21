@@ -149,3 +149,41 @@ function image_exist($file_route, $image, $user_image=false, $large=true) {
 
 	return $img;
 }
+
+function session_flash_messages($type, $title, $msg, $alert='lobibox', $size='normal', $position='bottom right', $delay=5000, $height=60) {
+	session()->flash('alert', $alert);
+	session()->flash('size', $size);
+	session()->flash('type', $type);
+	session()->flash('title', $title);
+	session()->flash('msg', $msg);
+	session()->flash('position', $position);
+	session()->flash('delay', $delay);
+	session()->flash('messageHeight', $height);
+}
+
+function currency_format($number, $symbol='', $side_symbol='Derecha', $decimals=2, $decimals_separator=',', $thousands_separator='.') {
+	$number=$number ?? str_pad(0.0, $decimals+2, 0);
+	$number_format=number_format($number, $decimals, $decimals_separator, $thousands_separator);
+	if ($side_symbol=='Izquierda') {
+		return $symbol.$number_format;
+	}
+	return $number_format.$symbol;
+}
+
+function calculate_commission($amount, $fixed_commission, $percentage_commission, $percentage_iva) {
+	if ($amount>0) {
+		if ($amount<50000) {
+			$type='1';
+			$value=$fixed_commission;
+			$commission=$fixed_commission;
+			$iva=($percentage_iva>0) ? (($commission*$percentage_iva)/100) : 0.00;
+		} else {
+			$type='2';
+			$value=$percentage_commission;
+			$commission=($percentage_commission>0) ? (($amount*$percentage_commission)/100) : 0.00;
+			$iva=($percentage_iva>0) ? (($commission*$percentage_iva)/100) : 0.00;
+		}
+		return ['commission' => $commission, 'type_commission' => $type, 'value_commission' => $value, 'iva' => $iva];
+	}
+	return ['commission' => 0.00, 'type_commission' => '1', 'value_commission' => $fixed_commission, 'iva' => 0.00];
+}

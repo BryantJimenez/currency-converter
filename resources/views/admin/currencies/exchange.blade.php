@@ -56,7 +56,7 @@
 
 								<div class="form-group col-lg-3 col-md-4 col-12">
 									<label class="col-form-label">Tasa de Conversión<b class="text-danger">*</b></label>
-									<input class="form-control min-decimal custom-error @error('conversion_rate.'.$loop->index) is-invalid @enderror" type="text" name="conversion_rate[{{ $loop->index }}]" required placeholder="Introduzca una tasa" value="{{ old('conversion_rate.'.$loop->index, $exchange['exchanges_reverse']->first()['pivot']->conversion_rate ?? '') }}" id="{{ 'conversion-rate-'.$loop->index }}">
+									<input class="form-control conversion-rate-min-decimal custom-error @error('conversion_rate.'.$loop->index) is-invalid @enderror" type="text" name="conversion_rate[{{ $loop->index }}]" required placeholder="Introduzca una tasa" value="{{ old('conversion_rate.'.$loop->index, $exchange['exchanges_reverse']->first()['pivot']->conversion_rate ?? '') }}" id="{{ 'conversion-rate-'.$loop->index }}">
 									<div class="custom-error-conversion-rate-{{ $loop->index }}"></div>
 								</div>
 

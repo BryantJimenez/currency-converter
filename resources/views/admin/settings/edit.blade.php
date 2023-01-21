@@ -44,13 +44,19 @@
 							@csrf
 							@method('PUT')
 							<div class="row">
-								<div class="form-group col-lg-6 col-md-6 col-12">
-									<label class="col-form-label">Comisión (%)<b class="text-danger">*</b></label>
-									<input class="form-control percentage-decimal custom-error @error('commission') is-invalid @enderror" type="text" name="commission" required placeholder="Introduzca una comisión" value="{{ old('commission', $setting->commission ?? 0.00) }}">
-									<div class="custom-error-commission"></div>
+								<div class="form-group col-lg-4 col-md-4 col-12">
+									<label class="col-form-label">Comisión Fija (Menos de 50.000)<b class="text-danger">*</b></label>
+									<input class="form-control decimal custom-error @error('fixed_commission') is-invalid @enderror" type="text" name="fixed_commission" required placeholder="Introduzca una comisión" value="{{ old('fixed_commission', $setting->fixed_commission ?? 0.00) }}">
+									<div class="custom-error-fixed_commission"></div>
 								</div>
 
-								<div class="form-group col-lg-6 col-md-6 col-12">
+								<div class="form-group col-lg-4 col-md-4 col-12">
+									<label class="col-form-label">Comisión Porcentual (Más de 49.999)<b class="text-danger">*</b></label>
+									<input class="form-control percentage-decimal custom-error @error('percentage_commission') is-invalid @enderror" type="text" name="percentage_commission" required placeholder="Introduzca una comisión" value="{{ old('percentage_commission', $setting->percentage_commission ?? 0.00) }}">
+									<div class="custom-error-percentage_commission"></div>
+								</div>
+
+								<div class="form-group col-lg-4 col-md-4 col-12">
 									<label class="col-form-label">IVA (%)<b class="text-danger">*</b></label>
 									<input class="form-control percentage-decimal custom-error @error('iva') is-invalid @enderror" type="text" name="iva" required placeholder="Introduzca un IVA" value="{{ old('iva', $setting->iva ?? 0.00) }}">
 									<div class="custom-error-iva"></div>

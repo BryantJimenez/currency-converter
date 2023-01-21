@@ -15,7 +15,7 @@ class CreateExchangesTable extends Migration
     {
         Schema::create('exchanges', function (Blueprint $table) {
             $table->id();
-            $table->float('conversion_rate', 10, 2)->unsigned()->defaut(0.00);
+            $table->float('conversion_rate', 10, 4)->unsigned()->defaut(0.0000);
             $table->bigInteger('currency_id')->unsigned()->nullable();
             $table->bigInteger('currency_exchange_id')->unsigned()->nullable();
             $table->timestamps();

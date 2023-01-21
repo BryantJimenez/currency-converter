@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Quote;
 use App\Models\Currency\Currency;
 use App\Http\Requests\Profile\ProfileUpdateRequest;
 use Illuminate\Http\Request;
@@ -19,8 +20,9 @@ class AdminController extends Controller
     public function index() {
         $users=User::role(['Super Admin', 'Administrador'])->count();
         $customers=User::role(['Cliente'])->count();
+        $quotes=Quote::count();
         $currencies=Currency::count();
-        return view('admin.home', compact('users', 'customers', 'currencies'));
+        return view('admin.home', compact('users', 'customers', 'quotes', 'currencies'));
     }
 
     public function profile() {

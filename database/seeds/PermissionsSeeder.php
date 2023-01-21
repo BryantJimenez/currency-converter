@@ -55,6 +55,16 @@ class PermissionsSeeder extends Seeder
             Permission::create(['name' => 'accounts.edit']);
         }
 
+        // Quote Permissions
+        $permission=Permission::where('name', 'quotes.index')->first();
+        if (is_null($permission)) {
+            Permission::create(['name' => 'quotes.index']);
+            Permission::create(['name' => 'quotes.create']);
+            Permission::create(['name' => 'quotes.show']);
+            Permission::create(['name' => 'quotes.edit']);
+            Permission::create(['name' => 'quotes.delete']);
+        }
+
         // Currency Permissions
         $permission=Permission::where('name', 'currencies.index')->first();
         if (is_null($permission)) {

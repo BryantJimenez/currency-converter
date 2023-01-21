@@ -371,6 +371,79 @@ $(document).ready(function(){
 		});
 	});
 
+	// Quotes
+	$("button[action='quote']").on("click",function(){
+		$("#formQuote").validate({
+			rules:
+			{
+				customer_source_id: {
+					required: true
+				},
+
+				customer_destination_id: {
+					required: true
+				},
+
+				currency_source_id: {
+					required: true
+				},
+
+				currency_destination_id: {
+					required: true
+				},
+
+				reason: {
+					required: true,
+					minlength: 2,
+					maxlength: 1000
+				},
+
+				type_operation: {
+					required: true
+				},
+
+				amount: {
+					required: true,
+					number: true,
+					min: 0
+				}
+			},
+			messages:
+			{
+				customer_source_id: {
+					required: 'Seleccione una opción.'
+				},
+
+				customer_destination_id: {
+					required: 'Seleccione una opción.'
+				},
+
+				currency_source_id: {
+					required: 'Seleccione una opción.'
+				},
+
+				currency_destination_id: {
+					required: 'Seleccione una opción.'
+				},
+
+				type_operation: {
+					required: 'Seleccione una opción.'
+				}
+			},
+			errorPlacement: function(error, element) {
+				if (element.hasClass('custom-error')) {
+					error.appendTo('.custom-error-'+$(element).attr('name'));
+				} else {
+					error.insertAfter(element);
+				}
+			},
+			submitHandler: function(form) {
+				$("button[action='quote']").attr('disabled', true);
+				form.submit();
+			}
+		});
+	});
+
 	// Currencies
 	$("button[action='currency']").on("click",function(){
 		$("#formCurrency").validate({
@@ -441,7 +514,13 @@ $(document).ready(function(){
 		$("#formSetting").validate({
 			rules:
 			{
-				commission: {
+				fixed_commission: {
+					required: true,
+					number: true,
+					min: 0
+				},
+
+				percentage_commission: {
 					required: true,
 					number: true,
 					min: 0,

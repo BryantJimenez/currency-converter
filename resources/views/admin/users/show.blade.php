@@ -19,7 +19,7 @@
 
 <div class="row layout-top-spacing">
 	<div class="col-xl-4 col-lg-6 col-md-6 col-12 layout-spacing">
-		<x-card-user user="{{ $user->slug }}" route="{{ route('users.edit', ['user' => $user->slug]) }}" permission="users.edit"></x-card-user>
+		<x-card-user user="{{ $user->slug }}" route="{{ route('users.edit', ['user' => $user->slug]) }}" permission="users.edit" title="Datos Personales"></x-card-user>
 	</div>
 </div>
 

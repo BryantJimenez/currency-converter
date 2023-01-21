@@ -56,6 +56,16 @@ class User extends Authenticatable
      *
      * @return string
      */
+    public function getFullnameAttribute()
+    {
+        return "{$this->name} {$this->lastname}";
+    }
+
+    /**
+     * Get the state.
+     *
+     * @return string
+     */
     public function getStateAttribute($value)
     {
         if ($value=='1') {

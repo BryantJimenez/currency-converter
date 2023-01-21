@@ -24,7 +24,8 @@ class SettingUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'commission' => 'required|numeric|regex:/^\d+(\.\d{1,2})?$/|min:0|max:100',
+            'fixed_commission' => 'required|numeric|regex:/^\d+(\.\d{1,2})?$/|min:0',
+            'percentage_commission' => 'required|numeric|regex:/^\d+(\.\d{1,2})?$/|min:0|max:100',
             'iva' => 'required|numeric|regex:/^\d+(\.\d{1,2})?$/|min:0|max:100'
         ];
     }

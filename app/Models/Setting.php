@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Setting extends Model
 {
-    protected $fillable = ['commission', 'iva'];
+    protected $fillable = ['fixed_commission', 'percentage_commission', 'iva'];
 }

@@ -88,7 +88,7 @@ class CurrencyController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Currency  $currency
+     * @param  \App\Models\Currency\Currency $currency
      * @return \Illuminate\Http\Response
      */
     public function destroy(Currency $currency) {

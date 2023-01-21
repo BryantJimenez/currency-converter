@@ -1,14 +1,14 @@
 <div class="user-profile">
 	<div class="widget-content widget-content-area p-4">
 		<div class="d-flex justify-content-between">
-			<h3 class="pb-3">Datos Personales</h3>
+			<h3 class="pb-3">{{ $title }}</h3>
 			@can($permission)
 			<a href="{{ $route }}" class="mt-2 edit-profile"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></a>
 			@endcan
 		</div>
 		<div class="text-center user-info">
-			<img src="{{ image_exist('/admins/img/users/', $user->photo, true) }}" width="90" height="90" alt="Foto de perfil" title="{{ $user->name." ".$user->lastname }}">
-			<p class="mb-0">{{ $user->name." ".$user->lastname }}</p>
+			<img src="{{ image_exist('/admins/img/users/', $user->photo, true) }}" width="90" height="90" alt="Foto de perfil" title="{{ $user->fullname }}">
+			<p class="mb-0">{{ $user->fullname }}</p>
 		</div>
 		<div class="user-info-list">
 

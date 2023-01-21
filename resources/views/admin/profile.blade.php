@@ -16,7 +16,7 @@
 
 <div class="row layout-top-spacing">
 	<div class="col-xl-4 col-lg-6 col-md-6 col-12 layout-spacing">
-		<x-card-user user="{{ Auth::user()->slug }}" route="{{ route('profile.edit') }}" permission="profile.edit"></x-card-user>
+		<x-card-user user="{{ Auth::user()->slug }}" route="{{ route('profile.edit') }}" permission="profile.edit" title="Datos Personales"></x-card-user>
 	</div>
 </div>
 

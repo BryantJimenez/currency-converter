@@ -28,7 +28,7 @@
 
 <div class="row layout-top-spacing">
 	<div class="col-xl-4 col-lg-6 col-md-6 col-12 layout-spacing">
-		<x-card-user user="{{ $user->slug }}" route="{{ route('customers.edit', ['user' => $user->slug]) }}" permission="customers.edit"></x-card-user>
+		<x-card-user user="{{ $user->slug }}" route="{{ route('customers.edit', ['user' => $user->slug]) }}" permission="customers.edit" title="Datos Personales"></x-card-user>
 	</div>
 
 	<div class="col-xl-8 col-lg-6 col-md-6 col-12 layout-spacing">
@@ -87,7 +87,7 @@
 					<div class="col-12 mt-3">
 						@can('accounts.create')
 						<div class="text-right mr-3">
-							<button type="button" class="btn btn-sm btn-primary" onclick="accountCustomer('{{ $user->slug }}', '{{ $user->name." ".$user->lastname }}')">Agregar</button>
+							<button type="button" class="btn btn-sm btn-primary" onclick="accountCustomer('{{ $user->slug }}', '{{ $user->fullname }}')">Agregar</button>
 						</div>
 						@endcan
 
@@ -114,7 +114,7 @@
 									<td>
 										<div class="btn-group btn-svg-sm" role="group">
 											@can('accounts.edit')
-											<button type="button" class="btn btn-info btn-sm bs-tooltip mr-0" title="Editar Cuenta Bancaria" onclick="accountCustomerEdit('{{ $user->slug }}', '{{ $account->slug }}', '{{ $user->name." ".$user->lastname }}', '{{ $account->bank }}', '{{ $account->number }}')">
+											<button type="button" class="btn btn-info btn-sm bs-tooltip mr-0" title="Editar Cuenta Bancaria" onclick="accountCustomerEdit('{{ $user->slug }}', '{{ $account->slug }}', '{{ $user->fullname }}', '{{ $account->bank }}', '{{ $account->number }}')">
 												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
 											</button>
 											@endcan
@@ -146,7 +146,7 @@
 					<div class="col-12 mt-3">
 						@can('contacts.create')
 						<div class="text-right mr-3">
-							<button type="button" class="btn btn-sm btn-primary" onclick="contactCustomer('{{ $user->slug }}', '{{ $user->name." ".$user->lastname }}')">Agregar</button>
+							<button type="button" class="btn btn-sm btn-primary" onclick="contactCustomer('{{ $user->slug }}', '{{ $user->fullname }}')">Agregar</button>
 						</div>
 						@endcan
 
@@ -168,7 +168,7 @@
 								<tr>
 									<td>{{ $loop->iteration }}</td>
 									<td>{{ $contact->pivot->alias }}</td>
-									<td>{{ $contact->name.' '.$contact->lastname }}</td>
+									<td>{{ $contact->fullname }}</td>
 									<td>{{ $contact['country']->name }}</td>
 									<td>{{ $contact->dni }}</td>
 									<td>@if(!is_null($contact->email)){{ $contact->email }}@else{{ 'No Ingresado' }}@endif</td>

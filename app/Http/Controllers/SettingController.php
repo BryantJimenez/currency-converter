@@ -25,9 +25,9 @@ class SettingController extends Controller
     public function update(SettingUpdateRequest $request) {
         $setting=Setting::first();
         if (is_null($setting)) {
-        	$setting=Setting::create(['commission' => request('commission'), 'iva' => request('iva')]);
+        	$setting=Setting::create(['fixed_commission' => request('fixed_commission'), 'percentage_commission' => request('percentage_commission'), 'iva' => request('iva')]);
         } else {
-        	$setting->fill(['commission' => request('commission'), 'iva' => request('iva')])->save();
+        	$setting->fill(['fixed_commission' => request('fixed_commission'), 'percentage_commission' => request('percentage_commission'), 'iva' => request('iva')])->save();
         }
         if ($setting) {
             return redirect()->route('settings.edit')->with(['alert' => 'sweet', 'type' => 'success', 'title' => 'Edición exitosa', 'msg' => 'Los ajustes han sido editados exitosamente.']);

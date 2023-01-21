@@ -29,7 +29,7 @@ class CurrencyExchangeUpdateRequest extends FormRequest
         $currencies=Currency::where('id', '!=', $this->currency->id)->get()->pluck('slug');
         return [
             'conversion_rate' => 'required|array',
-            'conversion_rate.*' => 'required|numeric|regex:/^\d+(\.\d{1,2})?$/|min:0',
+            'conversion_rate.*' => 'required|numeric|regex:/^\d+(\.\d{1,4})?$/|min:0',
             'currency_id' => 'required|array',
             'currency_id.*' => 'required|'.Rule::in($currencies)
         ];

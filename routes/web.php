@@ -63,6 +63,17 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
 		Route::put('/{user:slug}/cuentas/{account:slug}', 'CustomerController@accountUpdate')->name('customers.accounts.update')->middleware('permission:accounts.edit');
 	});
 
+	// Quotes
+	Route::prefix('cotizaciones')->group(function () {
+		Route::get('/', 'QuoteController@index')->name('quotes.index')->middleware('permission:quotes.index');
+		Route::get('/registrar', 'QuoteController@create')->name('quotes.create')->middleware('permission:quotes.create');
+		Route::post('/', 'QuoteController@store')->name('quotes.store')->middleware('permission:quotes.create');
+		Route::get('/{quote:id}', 'QuoteController@show')->name('quotes.show')->middleware('permission:quotes.show');
+		Route::get('/{quote:id}/editar', 'QuoteController@edit')->name('quotes.edit')->middleware('permission:quotes.edit');
+		Route::put('/{quote:id}', 'QuoteController@update')->name('quotes.update')->middleware('permission:quotes.edit');
+		Route::delete('/{quote:id}', 'QuoteController@destroy')->name('quotes.delete')->middleware('permission:quotes.delete');
+	});
+
 	// Currencies
 	Route::prefix('monedas')->group(function () {
 		Route::get('/', 'CurrencyController@index')->name('currencies.index')->middleware('permission:currencies.index');

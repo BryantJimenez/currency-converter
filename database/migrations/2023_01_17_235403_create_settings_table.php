@@ -15,7 +15,8 @@ class CreateSettingsTable extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
-            $table->float('commission', 10, 2)->unsigned()->default(0.00);
+            $table->float('fixed_commission', 10, 2)->unsigned()->default(0.00);
+            $table->float('percentage_commission', 10, 2)->unsigned()->default(0.00);
             $table->float('iva', 10, 2)->unsigned()->default(0.00);
             $table->timestamps();
         });

@@ -12,7 +12,7 @@ class SettingsSeeder extends Seeder
     public function run()
     {
         $settings = [
-    		['commission' => 2.5, 'iva' => 19]
+    		['fixed_commission' => 2000.00, 'percentage_commission' => 2.5, 'iva' => 19]
     	];
     	DB::table('settings')->insert($settings);
     }

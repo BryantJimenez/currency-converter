@@ -14,7 +14,7 @@
 			<label class="col-form-label">Contacto<b class="text-danger">*</b></label>
 			<select class="form-control selectpicker custom-error @error('customer_id') is-invalid @enderror" name="customer_id" required title="Seleccione" data-live-search="true" data-size="10">
 				@foreach($customers as $customer)
-				<option value="{{ $customer->slug }}" @if(old('customer_id')==$customer->slug) selected @endif>{{ $customer->name.' '.$customer->lastname.' (DNI: '.$customer->dni.')' }}</option>
+				<option value="{{ $customer->slug }}" @if(old('customer_id')==$customer->slug) selected @endif>{{ $customer->fullname.' (DNI: '.$customer->dni.')' }}</option>
 				@endforeach
 			</select>
 			<div class="custom-error-customer_id"></div>
