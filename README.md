@@ -55,7 +55,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Currency Converter GIF][product-gif]]
+![Currency Converter GIF][product-gif]
 
 It is a web system for calculating and quoting the exchange rate between currencies for sending remittances. It has its respective user authentication (login and recover password), in addition to a user profile. It has 6 modules, which are: Users, Clients, Quotes, Currencies, Reports and Settings.
 
