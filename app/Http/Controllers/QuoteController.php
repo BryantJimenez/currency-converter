@@ -146,7 +146,7 @@ class QuoteController extends Controller
         if ($request['type_operation']=='1') {
             $amount_destination=$amount;
             $amount=($conversion_rate>0) ? $amount_destination*(1/$conversion_rate) : 0.00;
-            $commissions=calculate_commission($amount, $settings->fixed_commission, $settings->percentage_commission, $settings->iva);
+            $commissions=calculate_commission($amount, $settings->fixed_commission, $settings->percentage_commission, $settings->iva, $settings->max_fixed_commission);
             $type_commission=$commissions['type_commission'];
             $value_commission=$commissions['value_commission'];
             $iva=$commissions['iva'];
@@ -154,7 +154,7 @@ class QuoteController extends Controller
             $total=$amount+$commission+$iva;
         } elseif ($request['type_operation']=='2') {
             $amount_destination=$amount*$conversion_rate;
-            $commissions=calculate_commission($amount, $settings->fixed_commission, $settings->percentage_commission, $settings->iva);
+            $commissions=calculate_commission($amount, $settings->fixed_commission, $settings->percentage_commission, $settings->iva, $settings->max_fixed_commission);
             $type_commission=$commissions['type_commission'];
             $value_commission=$commissions['value_commission'];
             $iva=$commissions['iva'];

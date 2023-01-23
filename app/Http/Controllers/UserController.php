@@ -9,7 +9,9 @@ use App\Http\Requests\User\UserUpdateRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Jobs\SendEmailRegister;
+use Exception;
 use Auth;
+use Log;
 
 class UserController extends Controller
 {
@@ -53,7 +55,11 @@ class UserController extends Controller
                 $user->fill(['photo' => $photo])->save();
             }
 
-            SendEmailRegister::dispatch($user->slug);
+            try {
+                SendEmailRegister::dispatch($user->slug);
+            } catch (Exception $e) {
+                Log::error('UserController@store - SendEmailRegister Exception: '.$e->getMessage());
+            }
             return redirect()->route('users.index')->with(['alert' => 'sweet', 'type' => 'success', 'title' => 'Registro exitoso', 'msg' => 'El usuario ha sido registrado exitosamente.']);
         } else {
             return redirect()->route('users.create')->with(['alert' => 'lobibox', 'type' => 'error', 'title' => 'Registro fallido', 'msg' => 'Ha ocurrido un error durante el proceso, intentelo nuevamente.'])->withInputs();

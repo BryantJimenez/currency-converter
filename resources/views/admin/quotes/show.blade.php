@@ -57,7 +57,7 @@
 							</li>
 
 							<li class="contacts-block__item">
-								<span class="h6 text-black"><b>A Cobrar:</b> {{ currency_format($quote->amount, $quote['currency_source']->symbol, $quote['currency_source']->side, 2, ',', '.') }}</span>
+								<span class="h6 text-black"><b>A Cobrar:</b> {{ currency_format($quote->total, $quote['currency_source']->symbol, $quote['currency_source']->side, 2, ',', '.') }}</span>
 							</li>
 
 							<li class="contacts-block__item">
@@ -69,7 +69,7 @@
 							</li>
 
 							<li class="contacts-block__item">
-								<span class="h6 text-black"><b>Total:</b> {{ currency_format($quote->total, $quote['currency_source']->symbol, $quote['currency_source']->side, 2, ',', '.') }}</span>
+								<span class="h6 text-black"><b>Total:</b> {{ currency_format($quote->amount, $quote['currency_source']->symbol, $quote['currency_source']->side, 2, ',', '.') }}</span>
 							</li>
 
 							<li class="contacts-block__item">

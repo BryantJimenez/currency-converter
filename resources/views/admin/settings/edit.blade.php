@@ -45,13 +45,13 @@
 							@method('PUT')
 							<div class="row">
 								<div class="form-group col-lg-4 col-md-4 col-12">
-									<label class="col-form-label">Comisión Fija (Menos de 50.000)<b class="text-danger">*</b></label>
+									<label class="col-form-label">Comisión Fija (Menos de {{ number_format($settings->max_fixed_commission ?? 80000.00, 2, ',', '.') }})<b class="text-danger">*</b></label>
 									<input class="form-control decimal custom-error @error('fixed_commission') is-invalid @enderror" type="text" name="fixed_commission" required placeholder="Introduzca una comisión" value="{{ old('fixed_commission', $setting->fixed_commission ?? 0.00) }}">
 									<div class="custom-error-fixed_commission"></div>
 								</div>
 
 								<div class="form-group col-lg-4 col-md-4 col-12">
-									<label class="col-form-label">Comisión Porcentual (Más de 49.999)<b class="text-danger">*</b></label>
+									<label class="col-form-label">Comisión Porcentual (Desde {{ number_format($settings->max_fixed_commission ?? 80000.00, 2, ',', '.') }})<b class="text-danger">*</b></label>
 									<input class="form-control percentage-decimal custom-error @error('percentage_commission') is-invalid @enderror" type="text" name="percentage_commission" required placeholder="Introduzca una comisión" value="{{ old('percentage_commission', $setting->percentage_commission ?? 0.00) }}">
 									<div class="custom-error-percentage_commission"></div>
 								</div>

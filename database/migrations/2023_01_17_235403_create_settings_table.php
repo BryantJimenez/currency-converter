@@ -17,6 +17,7 @@ class CreateSettingsTable extends Migration
             $table->id();
             $table->float('fixed_commission', 10, 2)->unsigned()->default(0.00);
             $table->float('percentage_commission', 10, 2)->unsigned()->default(0.00);
+            $table->float('max_fixed_commission', 10, 2)->unsigned()->default(80000.00);
             $table->float('iva', 10, 2)->unsigned()->default(0.00);
             $table->timestamps();
         });

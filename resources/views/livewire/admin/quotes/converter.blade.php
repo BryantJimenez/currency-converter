@@ -12,9 +12,9 @@
 		<tbody>
 			<tr>
 				<td>{{ number_format($conversion_rate ?? 0.0000, 4, ',', '.') }}</td>
-				<td>{{ currency_format($amount, $currency_source->symbol ?? '', $currency_source->side ?? 'Derecha', 2, ',', '.') }}</td>
-				<td>{{ currency_format($commission, $currency_source->symbol ?? '', $currency_source->side ?? 'Derecha', 2, ',', '.') }}</td>
 				<td>{{ currency_format($total, $currency_source->symbol ?? '', $currency_source->side ?? 'Derecha', 2, ',', '.') }}</td>
+				<td>{{ currency_format($commission, $currency_source->symbol ?? '', $currency_source->side ?? 'Derecha', 2, ',', '.') }}</td>
+				<td>{{ currency_format($amount, $currency_source->symbol ?? '', $currency_source->side ?? 'Derecha', 2, ',', '.') }}</td>
 				<td>{{ currency_format($amount_destination, $currency_destination->symbol ?? '', $currency_destination->side ?? 'Derecha', 2, ',', '.') }}</td>
 			</tr>
 		</tbody>

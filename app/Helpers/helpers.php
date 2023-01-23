@@ -170,9 +170,9 @@ function currency_format($number, $symbol='', $side_symbol='Derecha', $decimals=
 	return $number_format.$symbol;
 }
 
-function calculate_commission($amount, $fixed_commission, $percentage_commission, $percentage_iva) {
+function calculate_commission($amount, $fixed_commission, $percentage_commission, $percentage_iva, $max_fixed_commission=80000) {
 	if ($amount>0) {
-		if ($amount<50000) {
+		if ($amount<$max_fixed_commission) {
 			$type='1';
 			$value=$fixed_commission;
 			$commission=$fixed_commission;
