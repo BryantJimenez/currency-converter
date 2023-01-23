@@ -123,12 +123,12 @@ function selectArray($arrays, $selectedItems) {
 	return $selects;
 }
 
-function store_files($file, $file_name, $route) {
+function store_files($file, $file_name, $route, $disk='public') {
 	$image=$file_name.".".$file->getClientOriginalExtension();
-	if (file_exists(public_path().$route.$image)) {
-		unlink(public_path().$route.$image);
+	if (Storage::disk($disk)->exists($route.$image)) {
+		Storage::disk($disk)->delete($route.$image);
 	}
-	$file->move(public_path().$route, $image);
+	Storage::disk($disk)->putFileAs($route, $file, $image);
 	return $image;
 }
 

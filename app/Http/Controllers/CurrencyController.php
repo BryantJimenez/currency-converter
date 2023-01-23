@@ -118,14 +118,14 @@ class CurrencyController extends Controller
         }
     }
 
-    public function exchangesEdit(Currency $currency) {
+    public function editExchanges(Currency $currency) {
         $exchanges=Currency::with(['exchanges_reverse' => function($query) use ($currency) {
             $query->where('currencies.id', $currency->id);
         }])->where('id', '!=', $currency->id)->orderBy('id', 'ASC')->get();
         return view('admin.currencies.exchange', compact('currency', 'exchanges'));
     }
 
-    public function exchangesUpdate(CurrencyExchangeUpdateRequest $request, Currency $currency) {
+    public function updateExchanges(CurrencyExchangeUpdateRequest $request, Currency $currency) {
         $success=true;
 
         foreach (request('currency_id') as $key => $value) {

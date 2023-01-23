@@ -7,7 +7,7 @@
 			@endcan
 		</div>
 		<div class="text-center user-info">
-			<img src="{{ image_exist('/admins/img/users/', $user->photo, true) }}" width="90" height="90" alt="Foto de perfil" title="{{ $user->fullname }}">
+			<img src="{{ $user->photo_url }}" width="90" height="90" alt="Foto de perfil" title="{{ $user->fullname }}">
 			<p class="mb-0">{{ $user->fullname }}</p>
 		</div>
 		<div class="user-info-list">

@@ -161,6 +161,7 @@ return [
         'number'                => 'número',
         'customer_source_id'    => 'cliente origen',
         'customer_destination_id'=> 'cliente destino',
+        'account_destination_id'=> 'cuenta bancaria destino',
         'currency_source_id'    => 'moneda origen',
         'currency_destination_id'=> 'moneda destino',
         'reason'                => 'motivo',
@@ -170,7 +171,11 @@ return [
         'symbol'                => 'simbolo',
         'side'                  => 'lado',
         'conversion_rate'       => 'tasa de conversión',
-        'commission'            => 'comisión',
+        'start'                 => 'inicio',
+        'end'                   => 'fin',
+        'currency_id'           => 'moneda',
+        'fixed_commission'      => 'comisión fija',
+        'percentage_commission' => 'porcentaje de comisión',
         'iva'                   => 'iva'
     ],
 ];

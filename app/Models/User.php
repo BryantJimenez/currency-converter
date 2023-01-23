@@ -52,13 +52,23 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the state.
+     * Get the fullname.
      *
      * @return string
      */
     public function getFullnameAttribute()
     {
         return "{$this->name} {$this->lastname}";
+    }
+
+    /**
+     * Get the photo url.
+     *
+     * @return string
+     */
+    public function getPhotoUrlAttribute()
+    {
+        return image_exist('/storage/img/users/', $this->photo, true);
     }
 
     /**

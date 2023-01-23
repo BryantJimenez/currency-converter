@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Quote;
 
 use App\Models\User;
+use App\Models\Account;
 use App\Models\Currency\Currency;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Validator;
@@ -28,14 +29,17 @@ class QuoteUpdateRequest extends FormRequest
     public function rules()
     {
         $customer=User::where([['slug', $this->customer_source_id], ['state', '1']])->first();
+        $customer_destination=User::where([['slug', $this->customer_destination_id], ['state', '1']])->first();
         $currency=Currency::where([['slug', $this->currency_source_id], ['state', '1']])->first();
         $customers=User::role(['Cliente'])->where('state', '1')->get()->pluck('slug');
         $customers_destination=User::role(['Cliente'])->where([['id', '!=', $customer->id ?? NULL], ['state', '1']])->get()->pluck('slug');
         $currencies=Currency::where('state', '1')->get()->pluck('slug');
         $currencies_destination=Currency::where([['id', '!=', $currency->id ?? NULL], ['state', '1']])->get()->pluck('slug');
+        $accounts_destination=Account::where([['user_id', $customer_destination->id ?? NULL], ['state', '1']])->get()->pluck('slug');
         return [
             'customer_source_id' => 'required|'.Rule::in($customers),
             'customer_destination_id' => 'required|'.Rule::in($customers_destination),
+            'account_destination_id' => 'required|'.Rule::in($accounts_destination),
             'currency_source_id' => 'required|'.Rule::in($currencies),
             'currency_destination_id' => 'required|'.Rule::in($currencies_destination),
             'reason' => 'required|string|min:2|max:1000',

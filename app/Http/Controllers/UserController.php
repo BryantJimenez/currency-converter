@@ -49,7 +49,7 @@ class UserController extends Controller
             // Mover imagen a carpeta users y extraer nombre
             if ($request->hasFile('photo')) {
                 $file=$request->file('photo');
-                $photo=store_files($file, $user->slug, '/admins/img/users/');
+                $photo=store_files($file, $user->slug, '/img/users/');
                 $user->fill(['photo' => $photo])->save();
             }
 
@@ -101,7 +101,7 @@ class UserController extends Controller
             // Mover imagen a carpeta users y extraer nombre
             if ($request->hasFile('photo')) {
                 $file=$request->file('photo');
-                $photo=store_files($file, $user->slug, '/admins/img/users/');
+                $photo=store_files($file, $user->slug, '/img/users/');
                 $user->fill(['photo' => $photo])->save();
             }
 

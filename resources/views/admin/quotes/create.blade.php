@@ -61,6 +61,18 @@
 									<div class="custom-error-customer_destination_id"></div>
 								</div>
 
+								<div class="form-group col-12">
+									<label class="col-form-label">Cuenta Bancaria de Destino<b class="text-danger">*</b></label>
+									<select class="form-control @error('account_destination_id') is-invalid @enderror" name="account_destination_id" required>
+										<option value="">Seleccione</option>
+										@if(!is_null(old('customer_destination_id')))
+										@foreach($customers->where('slug', old('customer_destination_id'))->first()['accounts'] ?? [] as $account)
+										<option value="{{ $account->slug }}" @if(old('account_destination_id')==$account->slug) selected @endif>{{ $account->bank.' ('.$account->number.')' }}</option>
+										@endforeach
+										@endif
+									</select>
+								</div>
+
 								<div class="form-group col-lg-6 col-md-6 col-12">
 									<label class="col-form-label">Moneda de Origen<b class="text-danger">*</b></label>
 									<select class="form-control @error('currency_source_id') is-invalid @enderror" name="currency_source_id" required>

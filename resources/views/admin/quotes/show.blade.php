@@ -77,6 +77,13 @@
 							</li>
 
 							<li class="contacts-block__item">
+								<span class="h6 text-black"><b>Cuenta Bancaria de Destino:</b> @if(!is_null($quote['account_destination'])){{ $quote['account_destination']->bank.' ('.$quote['account_destination']->number.')' }}@else{{ 'No Ingresado' }}@endif</span>
+							</li>
+
+							<li class="contacts-block__item">
+								@can('quotes.pdf.invoice')
+								<a href="{{ route('quotes.pdf.invoice', ['quote' => $quote->id]) }}" class="btn btn-primary" target="_blank">Factura</a>
+								@endcan
 								<a href="{{ route('quotes.index') }}" class="btn btn-secondary">Volver</a>
 							</li>
 						</ul>

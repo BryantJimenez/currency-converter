@@ -509,6 +509,55 @@ $(document).ready(function(){
 		});
 	});
 
+	// Reports
+	$("button[action='report']").on("click",function(){
+		$("#formReport").validate({
+			rules:
+			{
+				start: {
+					required: true,
+					date: false,
+					time: false
+				},
+
+				end: {
+					required: true,
+					date: false,
+					time: false
+				},
+
+				currency_id: {
+					required: true
+				},
+
+				type: {
+					required: true
+				}
+			},
+			messages:
+			{
+				start: {
+					required: 'Seleccione una fecha.'
+				},
+
+				end: {
+					required: 'Seleccione una fecha.'
+				},
+
+				currency_id: {
+					required: 'Seleccione una opción.'
+				},
+
+				type: {
+					required: 'Seleccione una opción.'
+				}
+			},
+			submitHandler: function(form) {
+				form.submit();
+			}
+		});
+	});
+
 	// Settings
 	$("button[action='setting']").on("click",function(){
 		$("#formSetting").validate({

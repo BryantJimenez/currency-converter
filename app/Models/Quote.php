@@ -10,7 +10,17 @@ class Quote extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['amount', 'commission', 'iva', 'total', 'amount_destination', 'conversion_rate', 'type_operation', 'type_commission', 'value_commission', 'iva_percentage', 'reason', 'customer_source_id', 'customer_destination_id', 'currency_source_id', 'currency_destination_id'];
+    protected $fillable = ['amount', 'commission', 'iva', 'total', 'amount_destination', 'conversion_rate', 'type_operation', 'type_commission', 'value_commission', 'iva_percentage', 'reason', 'customer_source_id', 'customer_destination_id', 'account_destination_id', 'currency_source_id', 'currency_destination_id'];
+
+    /**
+     * Get the reference.
+     *
+     * @return string
+     */
+    public function getReferenceAttribute()
+    {
+        return str_pad($this->id, 8, 0, STR_PAD_LEFT);
+    }
 
     /**
      * Get the type operation.
@@ -74,6 +84,8 @@ class Quote extends Model
             $query->withTrashed();
         }, 'customer_destination' => function($query) {
             $query->withTrashed();
+        }, 'account_destination' => function($query) {
+            $query->withTrashed();
         }, 'currency_source' => function($query) {
             $query->withTrashed();
         }, 'currency_destination' => function($query) {
@@ -92,6 +104,10 @@ class Quote extends Model
 
     public function customer_destination() {
         return $this->belongsTo(User::class, 'customer_destination_id');
+    }
+
+    public function account_destination() {
+        return $this->belongsTo(Account::class, 'account_destination_id');
     }
 
     public function currency_source() {

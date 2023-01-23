@@ -65,7 +65,7 @@
 								<tr>
 									<td>{{ $loop->iteration }}</td>
 									<td class="d-flex align-items-center">
-										<img src="{{ image_exist('/admins/img/users/', $user->photo, true) }}" class="rounded-circle mr-2" width="45" height="45" alt="{{ $user->fullname }}" title="{{ $user->fullname }}"> {{ $user->fullname }}
+										<img src="{{ $user->photo_url }}" class="rounded-circle mr-2" width="45" height="45" alt="{{ $user->fullname }}" title="{{ $user->fullname }}"> {{ $user->fullname }}
 									</td>
 									<td>{{ $user['country']->name }}</td>
 									<td>{{ $user->dni }}</td>

@@ -63,7 +63,7 @@ class CustomerController extends Controller
             // Mover imagen a carpeta users y extraer nombre
             if ($request->hasFile('photo')) {
                 $file=$request->file('photo');
-                $photo=store_files($file, $user->slug, '/admins/img/users/');
+                $photo=store_files($file, $user->slug, '/img/users/');
                 $user->fill(['photo' => $photo])->save();
             }
 
@@ -113,7 +113,7 @@ class CustomerController extends Controller
             // Mover imagen a carpeta users y extraer nombre
             if ($request->hasFile('photo')) {
                 $file=$request->file('photo');
-                $photo=store_files($file, $user->slug, '/admins/img/users/');
+                $photo=store_files($file, $user->slug, '/img/users/');
                 $user->fill(['photo' => $photo])->save();
             }
 
@@ -157,7 +157,7 @@ class CustomerController extends Controller
         }
     }
 
-    public function contactStore(CustomerContactStoreRequest $request, User $user) {
+    public function storeContact(CustomerContactStoreRequest $request, User $user) {
         $customer=User::where('slug', request('customer_id'))->first();
         $exist=Contact::where([['user_id', $user->id], ['user_destination_id', $customer->id]])->exists();
         if ($exist) {
@@ -181,7 +181,7 @@ class CustomerController extends Controller
         }
     }
 
-    public function accountStore(CustomerAccountStoreRequest $request, User $user) {
+    public function storeAccount(CustomerAccountStoreRequest $request, User $user) {
         $account=Account::create(['number' => request('number'), 'bank' => request('bank'), 'user_id' => $user->id]);
         if ($account) {
             return redirect()->back()->with(['alert' => 'sweet', 'type' => 'success', 'title' => 'Registro exitoso', 'msg' => 'La cuenta bancaria ha sido agregada exitosamente.']);
@@ -190,12 +190,26 @@ class CustomerController extends Controller
         }
     }
 
-    public function accountUpdate(CustomerAccountUpdateRequest $request, User $user, Account $account) {
+    public function updateAccount(CustomerAccountUpdateRequest $request, User $user, Account $account) {
         $account->fill(['number' => request('number'), 'bank' => request('bank')])->save();
         if ($account) {
             return redirect()->back()->with(['alert' => 'sweet', 'type' => 'success', 'title' => 'Edición exitosa', 'msg' => 'La cuenta bancaria ha sido editada exitosamente.']);
         } else {
             return redirect()->back()->with(['alert' => 'lobibox', 'type' => 'error', 'title' => 'Edición fallida', 'msg' => 'Ha ocurrido un error durante el proceso, intentelo nuevamente.']);
         }
+    }
+
+    public function getAccounts(Request $request){
+        if (request()->has('customer_id')) {
+            $customer=User::role(['Cliente'])->where('slug', request('customer_id'))->first();
+            if (!is_null($customer)) {
+                $accounts=$customer->accounts()->select('number', 'slug', 'bank')->where('state', '1')->get();
+                return response()->json(['status' => true, 'data' => $accounts]);
+            }
+        } else {
+            $accounts=Account::select('number', 'slug', 'bank')->where('state', '1')->get();
+            return response()->json(['status' => true, 'data' => $accounts]);
+        }
+        return response()->json(['status' => false, 'message' => 'Ha ocurrido un problema, intentelo nuevamente.']);
     }
 }

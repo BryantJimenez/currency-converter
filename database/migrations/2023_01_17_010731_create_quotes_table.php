@@ -28,6 +28,7 @@ class CreateQuotesTable extends Migration
             $table->text('reason')->nullable();
             $table->bigInteger('customer_source_id')->unsigned()->nullable();
             $table->bigInteger('customer_destination_id')->unsigned()->nullable();
+            $table->bigInteger('account_destination_id')->unsigned()->nullable();
             $table->bigInteger('currency_source_id')->unsigned()->nullable();
             $table->bigInteger('currency_destination_id')->unsigned()->nullable();
             $table->timestamps();
@@ -36,6 +37,7 @@ class CreateQuotesTable extends Migration
             #Relations
             $table->foreign('customer_source_id')->references('id')->on('users')->onDelete('set null')->onUpdate('cascade');
             $table->foreign('customer_destination_id')->references('id')->on('users')->onDelete('set null')->onUpdate('cascade');
+            $table->foreign('account_destination_id')->references('id')->on('accounts')->onDelete('set null')->onUpdate('cascade');
             $table->foreign('currency_source_id')->references('id')->on('currencies')->onDelete('set null')->onUpdate('cascade');
             $table->foreign('currency_destination_id')->references('id')->on('currencies')->onDelete('set null')->onUpdate('cascade');
         });

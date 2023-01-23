@@ -58,9 +58,10 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
 		Route::delete('/{user:slug}', 'CustomerController@destroy')->name('customers.delete')->middleware('permission:customers.delete');
 		Route::put('/{user:slug}/activar', 'CustomerController@activate')->name('customers.activate')->middleware('permission:customers.active');
 		Route::put('/{user:slug}/desactivar', 'CustomerController@deactivate')->name('customers.deactivate')->middleware('permission:customers.deactive');
-		Route::post('/{user:slug}/contactos', 'CustomerController@contactStore')->name('customers.contacts.store')->middleware('permission:contacts.create');
-		Route::post('/{user:slug}/cuentas', 'CustomerController@accountStore')->name('customers.accounts.store')->middleware('permission:accounts.create');
-		Route::put('/{user:slug}/cuentas/{account:slug}', 'CustomerController@accountUpdate')->name('customers.accounts.update')->middleware('permission:accounts.edit');
+		Route::post('/{user:slug}/contactos', 'CustomerController@storeContact')->name('customers.contacts.store')->middleware('permission:contacts.create');
+		Route::post('/{user:slug}/cuentas', 'CustomerController@storeAccount')->name('customers.accounts.store')->middleware('permission:accounts.create');
+		Route::put('/{user:slug}/cuentas/{account:slug}', 'CustomerController@updateAccount')->name('customers.accounts.update')->middleware('permission:accounts.edit');
+		Route::get('/cuentas/obtener', 'CustomerController@getAccounts')->name('customers.accounts.get');
 	});
 
 	// Quotes
@@ -72,6 +73,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
 		Route::get('/{quote:id}/editar', 'QuoteController@edit')->name('quotes.edit')->middleware('permission:quotes.edit');
 		Route::put('/{quote:id}', 'QuoteController@update')->name('quotes.update')->middleware('permission:quotes.edit');
 		Route::delete('/{quote:id}', 'QuoteController@destroy')->name('quotes.delete')->middleware('permission:quotes.delete');
+		Route::get('/{quote:id}/pdf/factura', 'QuoteController@invoice')->name('quotes.pdf.invoice')->middleware('permission:quotes.pdf.invoice');
 	});
 
 	// Currencies
@@ -85,8 +87,14 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
 		Route::delete('/{currency:slug}', 'CurrencyController@destroy')->name('currencies.delete')->middleware('permission:currencies.delete');
 		Route::put('/{currency:slug}/activar', 'CurrencyController@activate')->name('currencies.activate')->middleware('permission:currencies.active');
 		Route::put('/{currency:slug}/desactivar', 'CurrencyController@deactivate')->name('currencies.deactivate')->middleware('permission:currencies.deactive');
-		Route::get('/{currency:slug}/intercambios', 'CurrencyController@exchangesEdit')->name('currencies.exchanges.edit')->middleware('permission:exchanges.edit');
-		Route::put('/{currency:slug}/intercambios', 'CurrencyController@exchangesUpdate')->name('currencies.exchanges.update')->middleware('permission:exchanges.edit');
+		Route::get('/{currency:slug}/intercambios', 'CurrencyController@editExchanges')->name('currencies.exchanges.edit')->middleware('permission:exchanges.edit');
+		Route::put('/{currency:slug}/intercambios', 'CurrencyController@updateExchanges')->name('currencies.exchanges.update')->middleware('permission:exchanges.edit');
+	});
+
+	// Reports
+	Route::prefix('reportes')->group(function () {
+		Route::get('/', 'ReportController@index')->name('reports.index')->middleware('permission:reports.index');
+		Route::post('/', 'ReportController@export')->name('reports.export')->middleware('permission:reports.index');
 	});
 
 	// Settings

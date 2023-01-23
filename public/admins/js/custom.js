@@ -134,6 +134,14 @@ function GetIEVersion() {
 }
 
 //////// Scripts ////////
+function errorNotification() {
+  Lobibox.notify('error', {
+    title: 'Error',
+    sound: true,
+    msg: 'Ha ocurrido un problema, inténtelo de nuevo.'
+  });
+}
+
 $(document).ready(function() {
   //Validación para introducir solo números
   $('.number, #phone').keypress(function() {
@@ -267,6 +275,28 @@ $(document).ready(function() {
       enableTime: false,
       dateFormat: "d-m-Y",
       maxDate : "today"
+    });
+  }
+
+  if ($('#startDateSearchFlatpickr').length && $('#endDateSearchFlatpickr').length) {
+    var startFlatpickr=flatpickr(document.getElementById('startDateSearchFlatpickr'), {
+      locale: 'es',
+      enableTime: false,
+      dateFormat: "d-m-Y",
+      time_24hr: false,
+      onChange: function(selectedDates, dateStr, instance) {
+        endFlatpickr.set("minDate", $("#startDateSearchFlatpickr").val());
+      }
+    });
+
+    var endFlatpickr=flatpickr(document.getElementById('endDateSearchFlatpickr'), {
+      locale: 'es',
+      enableTime: false,
+      dateFormat: "d-m-Y",
+      time_24hr: false,
+      onChange: function(selectedDates, dateStr, instance) {
+        startFlatpickr.set("maxDate", $("#endDateSearchFlatpickr").val());
+      }
     });
   }
 
@@ -406,6 +436,40 @@ $('select[name="account_question"]').change(function(event) {
   } else {
     $('.account-data').addClass('d-none');
     $('.account-data input').attr('disabled', true);
+  }
+});
+
+// Function for add accounts in select
+$('select[name="customer_destination_id"]').change(function() {
+  var customer_destination_id=$('select[name="customer_destination_id"]').val();
+  $('select[name="account_destination_id"] option').remove();
+  $('select[name="account_destination_id"]').append($('<option>', {
+    value: '',
+    text: 'Seleccione'
+  }));
+  if (customer_destination_id!="") {
+    $.ajax({
+      url: '/admin/clientes/cuentas/obtener',
+      type: 'GET',
+      dataType: 'json',
+      data: {customer_id: customer_destination_id}
+    })
+    .done(function(obj) {
+      if (obj.status) {
+        $('select[name="account_destination_id"] option[value!=""]').remove();
+        for (var i=obj.data.length-1; i>=0; i--) {
+          $('select[name="account_destination_id"]').append($('<option>', {
+            value: obj.data[i].slug,
+            text: obj.data[i].bank+' ('+obj.data[i].number+')'
+          }));
+        }
+      } else {
+        errorNotification();
+      }
+    })
+    .fail(function() {
+      errorNotification();
+    });
   }
 });
 
