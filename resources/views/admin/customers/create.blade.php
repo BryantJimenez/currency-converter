@@ -98,12 +98,12 @@
 
 								<div class="form-group col-lg-6 col-md-6 col-12 account-data @if(old('account_question')!='1') d-none @endif">
 									<label class="col-form-label">Banco<b class="text-danger">*</b></label>
-									<input class="form-control @error('bank') is-invalid @enderror" type="text" name="bank" required placeholder="Introduzca un banco" value="{{ old('bank') }}">
+									<input class="form-control @error('bank') is-invalid @enderror" type="text" name="bank" @if(old('account_question')!='1') disabled @else required @endif placeholder="Introduzca un banco" value="{{ old('bank') }}">
 								</div>
 
 								<div class="form-group col-lg-6 col-md-6 col-12 account-data @if(old('account_question')!='1') d-none @endif">
 									<label class="col-form-label">Número de Cuenta<b class="text-danger">*</b></label>
-									<input class="form-control number @error('number') is-invalid @enderror" type="text" name="number" required placeholder="Introduzca un número de cuenta" value="{{ old('number') }}">
+									<input class="form-control number @error('number') is-invalid @enderror" type="text" name="number" @if(old('account_question')!='1') disabled @else required @endif placeholder="Introduzca un número de cuenta" value="{{ old('number') }}">
 								</div>
 
 								<div class="form-group col-12">

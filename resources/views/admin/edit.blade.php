@@ -46,7 +46,7 @@
 							<div class="row">
 								<div class="form-group col-lg-6 col-md-6 col-12">
 									<label class="col-form-label">Foto (Opcional)</label>
-									<input type="file" name="photo" accept="image/*" class="dropify" data-height="125" data-max-file-size="20M" data-allowed-file-extensions="jpg png jpeg web3" data-default-file="{{ image_exist('/storage/img/users/', Auth::user()->photo, true) }}" />
+									<input type="file" name="photo" accept="image/*" class="dropify" data-height="125" data-max-file-size="20M" data-allowed-file-extensions="jpg png jpeg web3" data-default-file="{{ Auth::user()->photo_url }}" />
 								</div>
 
 								<div class="form-group col-lg-6 col-md-6 col-12">
@@ -65,7 +65,7 @@
 
 								<div class="form-group col-lg-6 col-md-6 col-12">
 									<label class="col-form-label">Correo Electrónico</label>
-									<input class="form-control" type="text" disabled value="{{ Auth::user()->email }}">
+									<input class="form-control text-dark" type="text" disabled value="{{ Auth::user()->email }}">
 								</div>
 
 								<div class="form-group col-lg-6 col-md-6 col-12">

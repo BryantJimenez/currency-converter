@@ -10,14 +10,14 @@
         <ul class="navbar-item flex-row navbar-dropdown search-ul">
             <li class="nav-item dropdown user-profile-dropdown  order-lg-0 order-1">
                 <a href="{{ route('admin') }}" class="nav-link dropdown-toggle user" id="userProfileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src="{{ image_exist('/admins/img/users/', Auth::user()->photo, true) }}" alt="avatar" title="avatar" class="img-fluid">
+                    <img src="{{ Auth::user()->photo_url }}" alt="avatar" title="avatar" class="img-fluid">
                 </a>
                 <div class="dropdown-menu position-absolute" aria-labelledby="userProfileDropdown">
                     <div class="user-profile-section">
                         <div class="media mx-auto">
-                            <img src="{{ image_exist('/admins/img/users/', Auth::user()->photo, true) }}" class="img-fluid mr-2" alt="avatar" title="avatar">
+                            <img src="{{ Auth::user()->photo_url }}" class="img-fluid mr-2" alt="avatar" title="avatar">
                             <div class="media-body">
-                                <h5>{{ Auth::user()->name." ".Auth::user()->lastname }}</h5>
+                                <h5>{{ Auth::user()->fullname }}</h5>
                                 <p>{!! roleUser(Auth::user(), 0) !!}</p>
                             </div>
                         </div>

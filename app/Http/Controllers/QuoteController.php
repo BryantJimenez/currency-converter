@@ -56,7 +56,7 @@ class QuoteController extends Controller
         if ($quote) {
             return redirect()->route('quotes.index')->with(['alert' => 'sweet', 'type' => 'success', 'title' => 'Registro exitoso', 'msg' => 'La cotización ha sido registrada exitosamente.']);
         } else {
-            return redirect()->route('quotes.create')->with(['alert' => 'lobibox', 'type' => 'error', 'title' => 'Registro fallido', 'msg' => 'Ha ocurrido un error durante el proceso, intentelo nuevamente.'])->withInputs();
+            return redirect()->route('quotes.create')->with(['alert' => 'lobibox', 'type' => 'error', 'title' => 'Registro fallido', 'msg' => 'Ha ocurrido un error durante el proceso, intentelo nuevamente.'])->withInput();
         }
     }
 
@@ -124,7 +124,7 @@ class QuoteController extends Controller
     public function calculateQuote($request) {
         $settings=Setting::first();
         if (is_null($settings)) {
-            return redirect()->back()->with(['alert' => 'lobibox', 'type' => 'error', 'title' => 'Los ajustes no estan configurados', 'msg' => 'Ha ocurrido un error durante el proceso, intentelo nuevamente.'])->withInputs();
+            return redirect()->back()->with(['alert' => 'lobibox', 'type' => 'error', 'title' => 'Los ajustes no estan configurados', 'msg' => 'Ha ocurrido un error durante el proceso, intentelo nuevamente.'])->withInput();
         }
 
         $customer_source=User::where('slug', $request['customer_source_id'])->first();
@@ -135,7 +135,7 @@ class QuoteController extends Controller
 
         $exchange=Exchange::where([['currency_id', $currency_source->id], ['currency_exchange_id', $currency_destination->id]])->first();
         if (is_null($exchange) || is_null($exchange->conversion_rate)) {
-            return redirect()->back()->with(['alert' => 'lobibox', 'type' => 'error', 'title' => 'La tasa de conversión no existe', 'msg' => 'Agrega una tasa de intercambio entre estas monedas e intentelo nuevamente.'])->withInputs();
+            return redirect()->back()->with(['alert' => 'lobibox', 'type' => 'error', 'title' => 'La tasa de conversión no existe', 'msg' => 'Agrega una tasa de intercambio entre estas monedas e intentelo nuevamente.'])->withInput();
         }
 
         $iva=0.00;
