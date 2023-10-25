@@ -10,7 +10,7 @@ $factory->define(Exchange::class, function (Faker $faker) {
 	$currency=Currency::inRandomOrder()->first();
 	$currencies=Currency::where('id', '!=', $currency->id)->get()->pluck('id');
     return [
-        'conversion_rate' => $faker->randomFloat(4, 0, 20),
+        'conversion_rate' => $faker->randomFloat(6, 0, 20),
         'currency_id' => $currency->id,
         'currency_exchange_id' => $faker->randomElement($currencies)
     ];

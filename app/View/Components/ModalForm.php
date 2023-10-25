@@ -6,14 +6,14 @@ use Illuminate\View\Component;
 
 class ModalForm extends Component
 {
-    public $modal, $size, $form, $method, $title, $validate, $close, $button;
+    public $modal, $size='', $form, $method, $title, $validate, $close, $button;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($modal, $size='', $form, $method, $title, $validate, $close, $button)
+    public function __construct($modal, $size, $form, $method, $title, $validate, $close, $button)
     {
         $this->size=$size;
         $this->form=$form;

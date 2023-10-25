@@ -57,11 +57,11 @@ class Converter extends Component
 						$this->iva=$commissions['iva'];
 						$this->total=$this->amount+$this->commission;
 					} elseif ($this->type_operation=='2') {
-						$this->amount_destination=$this->amount*$this->conversion_rate;
 						$commissions=calculate_commission($this->amount, $settings->fixed_commission, $settings->percentage_commission, $settings->iva, $settings->max_fixed_commission);
 						$this->commission=$commissions['commission'];
 						$this->iva=$commissions['iva'];
-						$this->total=$this->amount+$this->commission;
+						$this->total=$this->amount-$this->commission;
+						$this->amount_destination=$this->total*$this->conversion_rate;
 					} elseif ($this->type_operation=='3') {
 						$this->amount_destination=$this->amount*$this->conversion_rate;
 						$this->commission=0.00;

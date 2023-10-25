@@ -11,7 +11,11 @@ use App\Models\Currency\Exchange;
 use App\Http\Requests\Quote\QuoteStoreRequest;
 use App\Http\Requests\Quote\QuoteUpdateRequest;
 use Illuminate\Http\Request;
+use App\Jobs\SendEmailQuoteInvoice;
 use Barryvdh\DomPDF\Facade as PDF;
+use Exception;
+use Auth;
+use Log;
 
 class QuoteController extends Controller
 {
@@ -40,7 +44,7 @@ class QuoteController extends Controller
      */
     public function create() {
     	$currencies=Currency::where('state', '1')->orderBy('name', 'ASC')->get();
-    	$customers=User::role(['Cliente'])->with(['accounts'])->where('state', '1')->orderBy('name', 'ASC')->get();
+    	$customers=User::with(['accounts'])->where([['user_role', 'Cliente'], ['state', '1']])->orderBy('name', 'ASC')->get();
         return view('admin.quotes.create', compact('currencies', 'customers'));
     }
 
@@ -52,8 +56,20 @@ class QuoteController extends Controller
      */
     public function store(QuoteStoreRequest $request) {
         $data=$this->calculateQuote($request->all());
+        $data['state_payment']=(Auth::user()->can('quotes.input.state_payment')) ? request('state_payment') : NULL;
         $quote=Quote::create($data);
         if ($quote) {
+            $types=['Empresa', 'Cliente'];
+            $pdf=PDF::setOptions(['isPhpEnabled' => true]);
+            $pdf=PDF::loadView('pdfs.quotes.invoice', compact('quote', 'types'));
+            $pdf->save(storage_path().'/app/public/files/quotes/invoice-'.$quote->id.'.pdf');
+
+            try {
+                $user=User::firstOrFail();
+                SendEmailQuoteInvoice::dispatch($user->slug, $quote->id);
+            } catch (Exception $e) {
+                Log::error('QuoteController@store - SendEmailQuoteInvoice Exception: '.$e->getMessage());
+            }
             return redirect()->route('quotes.index')->with(['alert' => 'sweet', 'type' => 'success', 'title' => 'Registro exitoso', 'msg' => 'La cotización ha sido registrada exitosamente.']);
         } else {
             return redirect()->route('quotes.create')->with(['alert' => 'lobibox', 'type' => 'error', 'title' => 'Registro fallido', 'msg' => 'Ha ocurrido un error durante el proceso, intentelo nuevamente.'])->withInput();
@@ -78,7 +94,7 @@ class QuoteController extends Controller
      */
     public function edit(Quote $quote) {
     	$currencies=Currency::where('state', '1')->orderBy('name', 'ASC')->get();
-    	$customers=User::role(['Cliente'])->with(['accounts'])->where('state', '1')->orderBy('name', 'ASC')->get();
+    	$customers=User::with(['accounts'])->where([['user_role', 'Cliente'], ['state', '1']])->orderBy('name', 'ASC')->get();
         return view('admin.quotes.edit', compact('quote', 'currencies', 'customers'));
     }
 
@@ -91,6 +107,9 @@ class QuoteController extends Controller
      */
     public function update(QuoteUpdateRequest $request, Quote $quote) {
         $data=$this->calculateQuote($request->all());
+        if (Auth::user()->can('quotes.input.state_payment')) {
+            $data['state_payment']=request('state_payment');
+        }
         $quote->fill($data)->save();
         if ($quote) {
             return redirect()->route('quotes.edit', ['quote' => $quote->id])->with(['alert' => 'sweet', 'type' => 'success', 'title' => 'Edición exitosa', 'msg' => 'La cotización ha sido editada exitosamente.']);
@@ -153,13 +172,14 @@ class QuoteController extends Controller
             $commission=$commissions['commission']-$iva;
             $total=$amount+$commission+$iva;
         } elseif ($request['type_operation']=='2') {
-            $amount_destination=$amount*$conversion_rate;
             $commissions=calculate_commission($amount, $settings->fixed_commission, $settings->percentage_commission, $settings->iva, $settings->max_fixed_commission);
             $type_commission=$commissions['type_commission'];
             $value_commission=$commissions['value_commission'];
             $iva=$commissions['iva'];
             $commission=$commissions['commission']-$iva;
-            $total=$amount+$commission+$iva;
+            $total=$amount;
+            $amount=$amount-$commission-$iva;
+            $amount_destination=$amount*$conversion_rate;
         } elseif ($request['type_operation']=='3') {
             $amount_destination=$amount*$conversion_rate;
             $type_commission='1';

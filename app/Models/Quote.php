@@ -10,7 +10,7 @@ class Quote extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['amount', 'commission', 'iva', 'total', 'amount_destination', 'conversion_rate', 'type_operation', 'type_commission', 'value_commission', 'iva_percentage', 'reason', 'customer_source_id', 'customer_destination_id', 'account_destination_id', 'currency_source_id', 'currency_destination_id'];
+    protected $fillable = ['amount', 'commission', 'iva', 'total', 'amount_destination', 'conversion_rate', 'type_operation', 'type_commission', 'value_commission', 'iva_percentage', 'reason', 'state_payment', 'customer_source_id', 'customer_destination_id', 'account_destination_id', 'currency_source_id', 'currency_destination_id'];
 
     /**
      * Get the reference.
@@ -67,6 +67,23 @@ class Quote extends Model
             return 'Fija';
         } elseif ($value=='2') {
             return 'Porcentaje';
+        }
+        return 'Desconocido';
+    }
+
+    /**
+     * Get the state payment.
+     *
+     * @return string
+     */
+    public function getStatePaymentAttribute($value)
+    {
+        if ($value=='1') {
+            return 'Pagado en Destino';
+        } elseif ($value=='2') {
+            return 'Pendiente';
+        } elseif ($value=='3') {
+            return 'Inconsistente por Datos Errados';
         }
         return 'Desconocido';
     }

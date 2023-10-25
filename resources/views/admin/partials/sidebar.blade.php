@@ -77,6 +77,20 @@
             </li>
             @endcan
 
+            @can('roles.index')
+            <li class="menu menu-single {{ active('admin/roles', 0) }}">
+                <a href="{{ route('roles.index') }}" data-active="{{ menu_expanded('admin/roles', 0) }}" class="menu-toggle">
+                    <div class="base-menu">
+                        <div class="base-icons">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shield"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        </div>
+                        <span>Roles</span>
+                    </div>
+                </a>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </li>
+            @endcan
+
             @can('reports.index')
             <li class="menu menu-single {{ active('admin/reportes', 0) }}">
                 <a href="{{ route('reports.index') }}" data-active="{{ menu_expanded('admin/reportes', 0) }}" class="menu-toggle">

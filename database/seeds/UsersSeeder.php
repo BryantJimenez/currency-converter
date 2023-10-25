@@ -3,6 +3,7 @@
 use App\Models\User;
 use App\Models\Contact;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
 
 class UsersSeeder extends Seeder
 {
@@ -16,20 +17,24 @@ class UsersSeeder extends Seeder
         User::create([
         	'name' => 'Super',
             'lastname' => 'Admin',
-        	'photo' => 'usuario.png',
-        	'slug' => 'super-admin',
-        	'email' => 'admin@gmail.com',
+            'photo' => 'usuario.png',
+            'slug' => 'super-admin',
+            'email' => 'admin@gmail.com',
             'phone' => '12345678',
-        	'password' => bcrypt('12345678'),
-        	'state' => "1"
+            'password' => bcrypt('12345678'),
+            'user_role' => 'Super Admin',
+            'custom_permissions' => '0',
+            'state' => '1'
         ]);
 
         $user=User::find(1);
-        $user->assignRole('Super Admin');
+        $role=Role::with(['permissions'])->where('name', 'Super Admin')->first();
+        $user->givePermissionTo($role['permissions']->pluck('name'));
 
-        $customers=factory(User::class, 50)->create(['password' => NULL]);
+        $role=Role::with(['permissions'])->where('name', 'Cliente')->first();
+        $customers=factory(User::class, 50)->create(['password' => NULL, 'user_role' => 'Cliente', 'custom_permissions' => '0']);
         foreach ($customers as $customer) {
-            $customer->assignRole('Cliente');
+            $customer->givePermissionTo($role['permissions']->pluck('name'));
         }
 
         foreach ($customers as $customer) {

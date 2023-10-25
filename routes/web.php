@@ -91,6 +91,16 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
 		Route::put('/{currency:slug}/intercambios', 'CurrencyController@updateExchanges')->name('currencies.exchanges.update')->middleware('permission:exchanges.edit');
 	});
 
+	// Roles
+	Route::prefix('roles')->group(function () {
+		Route::get('/', 'RoleController@index')->name('roles.index')->middleware('permission:roles.index');
+		Route::get('/registrar', 'RoleController@create')->name('roles.create')->middleware('permission:roles.create');
+		Route::post('/', 'RoleController@store')->name('roles.store')->middleware('permission:roles.create');
+		Route::get('/{role:id}/editar', 'RoleController@edit')->name('roles.edit')->middleware('permission:roles.edit');
+		Route::put('/{role:id}', 'RoleController@update')->name('roles.update')->middleware('permission:roles.edit');
+		Route::delete('/{role:id}', 'RoleController@destroy')->name('roles.delete')->middleware('permission:roles.delete');
+	});
+
 	// Reports
 	Route::prefix('reportes')->group(function () {
 		Route::get('/', 'ReportController@index')->name('reports.index')->middleware('permission:reports.index');

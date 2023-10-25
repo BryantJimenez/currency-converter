@@ -32,6 +32,8 @@ $factory->define(User::class, function (Faker $faker) {
         'password' => Hash::make('12345678'),
         'remember_token' => Str::random(10),
         'state' => $faker->randomElement(['1', '0']),
+        'user_role' => $faker->randomElement(['Super Admin', 'Administrador', 'Cliente']),
+        'custom_permissions' => $faker->randomElement(['1', '0']),
         'country_id' => $faker->randomElement($countries)
     ];
 });

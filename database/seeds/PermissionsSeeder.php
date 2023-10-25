@@ -64,6 +64,7 @@ class PermissionsSeeder extends Seeder
             Permission::create(['name' => 'quotes.edit']);
             Permission::create(['name' => 'quotes.delete']);
             Permission::create(['name' => 'quotes.pdf.invoice']);
+            Permission::create(['name' => 'quotes.input.state_payment']);
         }
 
         // Currency Permissions
@@ -82,6 +83,16 @@ class PermissionsSeeder extends Seeder
         $permission=Permission::where('name', 'exchanges.edit')->first();
         if (is_null($permission)) {
             Permission::create(['name' => 'exchanges.edit']);
+        }
+
+        // Role Permissions
+        $permission=Permission::where('name', 'roles.index')->first();
+        if (is_null($permission)) {
+            Permission::create(['name' => 'roles.index']);
+            Permission::create(['name' => 'roles.create']);
+            Permission::create(['name' => 'roles.show']);
+            Permission::create(['name' => 'roles.edit']);
+            Permission::create(['name' => 'roles.delete']);
         }
 
         // Report Permissions

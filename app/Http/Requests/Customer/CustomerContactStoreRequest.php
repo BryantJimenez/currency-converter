@@ -26,7 +26,7 @@ class CustomerContactStoreRequest extends FormRequest
      */
     public function rules()
     {
-        $customers=User::role(['Cliente'])->where([['id', '!=', $this->user->id], ['state', '1']])->pluck('slug');
+        $customers=User::where([['id', '!=', $this->user->id], ['user_role', 'Cliente'], ['state', '1']])->pluck('slug');
         return [
             'user_alias' => 'required|string|min:2|max:191',
             'destination_alias' => 'required|string|min:2|max:191',

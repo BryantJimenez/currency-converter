@@ -114,6 +114,18 @@
 									<div class="custom-error-amount"></div>
 								</div>
 
+								@can('quotes.input.state_payment')
+								<div class="form-group col-12">
+									<label class="col-form-label">Estado de Pago<b class="text-danger">*</b></label>
+									<select class="form-control @error('state_payment') is-invalid @enderror" name="state_payment" required>
+										<option value="">Seleccione</option>
+										<option value="1" @if(old('state_payment')=='1') selected @endif>Pagado en Destino</option>
+										<option value="2" @if(old('state_payment')=='2') selected @endif>Pendiente</option>
+										<option value="3" @if(old('state_payment')=='3') selected @endif>Inconsistente por Datos Errados</option>
+									</select>
+								</div>
+								@endcan
+
 								<div class="form-group col-12">
 									<button type="button" class="btn btn-primary text-uppercase w-100" onclick="calculateCuote();">Calcular</button>
 								</div>

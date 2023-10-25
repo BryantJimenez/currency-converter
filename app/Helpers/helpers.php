@@ -9,21 +9,23 @@ function state($state) {
 	return '<span class="badge badge-dark">'.$state.'</span>';
 }
 
-function roleUser($user, $badge=true) {
-	$num=1;
-	$roles="";
-	foreach ($user['roles'] as $rol) {
-		if ($user->hasRole($rol->name)) {
-			$roles.=($user['roles']->count()==$num) ? $rol->name : $rol->name."<br>";
-			$num++;
-		}
+function statePayment($state) {
+	if ($state=='Inconsistente por Datos Errados') {
+		return '<span class="badge badge-danger">'.$state.'</span>';
+	} elseif ($state=='Pendiente') {
+		return '<span class="badge badge-warning">'.$state.'</span>';
+	} elseif ($state=='Pagado en Destino') {
+		return '<span class="badge badge-success">'.$state.'</span>';
 	}
+	return '<span class="badge badge-dark">'.$state.'</span>';
+}
 
-	if (!is_null($user['roles']) && !empty($roles)) {
+function roleUser($user, $badge=true) {
+	if (!is_null($user->user_role) && !empty($user->user_role)) {
 		if ($badge) {
-			return '<span class="badge badge-primary">'.$roles.'</span>';
+			return '<span class="badge badge-primary">'.$user->user_role.'</span>';
 		} else {
-			return $roles;
+			return $user->user_role;
 		}
 	} else {
 		if ($badge) {
@@ -123,6 +125,26 @@ function selectArray($arrays, $selectedItems) {
 	return $selects;
 }
 
+function selectArrayPermissions($arrays, $selectedItems) {
+	$selects="";
+	foreach ($arrays as $array) {
+		$select="";
+		if (count($selectedItems)>0) {
+			foreach ($selectedItems as $selected) {
+				if (is_object($selected) && $selected->name==$array->name) {
+					$select="selected";
+					break;
+				} elseif ($selected==$array->name) {
+					$select="selected";
+					break;
+				}
+			}
+		}
+		$selects.='<option value="'.$array->name.'" '.$select.'>'.trans('permissions.'.$array->name).'</option>';
+	}
+	return $selects;
+}
+
 function store_files($file, $file_name, $route, $disk='public') {
 	$image=$file_name.".".$file->getClientOriginalExtension();
 	if (Storage::disk($disk)->exists($route.$image)) {
@@ -176,13 +198,12 @@ function calculate_commission($amount, $fixed_commission, $percentage_commission
 			$type='1';
 			$value=$fixed_commission;
 			$commission=$fixed_commission;
-			$iva=($percentage_iva>0) ? (($commission*$percentage_iva)/100) : 0.00;
 		} else {
 			$type='2';
 			$value=$percentage_commission;
 			$commission=($percentage_commission>0) ? (($amount*$percentage_commission)/100) : 0.00;
-			$iva=($percentage_iva>0) ? (($commission*$percentage_iva)/100) : 0.00;
 		}
+		$iva=($percentage_iva>0) ? (($commission*$percentage_iva)/100) : 0.00;
 		return ['commission' => $commission, 'type_commission' => $type, 'value_commission' => $value, 'iva' => $iva];
 	}
 	return ['commission' => 0.00, 'type_commission' => '1', 'value_commission' => $fixed_commission, 'iva' => 0.00];

@@ -327,8 +327,8 @@ $(document).ready(function() {
     $(".conversion-rate-min-decimal").TouchSpin({
       min: 0,
       max: 999999999,
-      step: 0.0001,
-      decimals: 4,
+      step: 0.000001,
+      decimals: 6,
       buttondown_class: 'btn btn-primary rounded-0 h-100 mr-0',
       buttonup_class: 'btn btn-primary rounded-0 h-100 mr-0'
     });
@@ -407,6 +407,11 @@ function deleteCurrency(slug) {
   $('#formDeleteCurrency').attr('action', '/admin/monedas/' + slug);
 }
 
+function deleteRole(id) {
+  $("#deleteRole").modal();
+  $('#formDeleteRole').attr('action', '/admin/roles/' + id);
+}
+
 // Funciones para preguntar
 function contactCustomer(slug, name) {
   $("#contactCustomer input[name='name']").val(name);
@@ -426,6 +431,17 @@ function accountCustomerEdit(slug_user, slug_account, name, bank, number) {
   $("#accountCustomerEdit input[name='number']").val(number);
   $("#accountCustomerEdit").modal();
   $('#formAccountCustomerEdit').attr('action', '/admin/clientes/' + slug_user + '/cuentas/' + slug_account);
+}
+
+// Function for toggle custom permissions
+function toggleCustomPermissions() {
+  if ($('#customPermissions').hasClass('d-none')) {
+    $('input[name="custom_permissions"]').val('1');
+    $('#customPermissions').removeClass('d-none');
+  } else {
+    $('#customPermissions').addClass('d-none');
+    $('input[name="custom_permissions"]').val('0');
+  }
 }
 
 // funcion para mostrar/ocultar campos al cambiar la opción

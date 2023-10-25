@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 use App\Http\Requests\User\UserStoreRequest;
 use App\Http\Requests\User\UserUpdateRequest;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use App\Jobs\SendEmailRegister;
 use Exception;
+use Hash;
 use Auth;
 use Log;
 
@@ -21,7 +22,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $users=User::role(['Super Admin', 'Administrador'])->with(['roles'])->orderBy('id', 'DESC')->get();
+        $users=User::where('user_role', '!=', 'Cliente')->orderBy('id', 'DESC')->get();
         return view('admin.users.index', compact('users'));
     }
 
@@ -32,7 +33,8 @@ class UserController extends Controller
      */
     public function create() {
         $roles=Role::where('name', '!=', 'Cliente')->pluck('name');
-        return view('admin.users.create', compact('roles'));
+        $permissions=Permission::where('name', '!=', 'dashboard')->orderBy('id', 'ASC')->get();
+        return view('admin.users.create', compact('roles', 'permissions'));
     }
 
     /**
@@ -42,11 +44,17 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(UserStoreRequest $request) {
-        $data=array('name' => request('name'), 'lastname' => request('lastname'), 'phone' => request('phone'), 'email' => request('email'), 'password' => Hash::make(request('password')));
+        $data=array('name' => request('name'), 'lastname' => request('lastname'), 'phone' => request('phone'), 'email' => request('email'), 'password' => Hash::make(request('password')), 'user_role' => request('type'), 'custom_permissions' => request('custom_permissions'));
         $user=User::create($data);
 
         if ($user) {
-            $user->assignRole(request('type'));
+            if (request('custom_permissions')=='0') {
+                $role=Role::with(['permissions'])->where('name', request('type'))->first();
+                $permissions=$role['permissions']->pluck('name');
+            } else {
+                $permissions=array_merge(['dashboard'], request('permission_id'));
+            }
+            $user->givePermissionTo($permissions);
 
             // Mover imagen a carpeta users y extraer nombre
             if ($request->hasFile('photo')) {
@@ -87,7 +95,8 @@ class UserController extends Controller
             return redirect()->route('profile.edit');
         }
         $roles=Role::where('name', '!=', 'Cliente')->pluck('name');
-        return view('admin.users.edit', compact('user', 'roles'));
+        $permissions=Permission::where('name', '!=', 'dashboard')->orderBy('id', 'ASC')->get();
+        return view('admin.users.edit', compact('user', 'roles', 'permissions'));
     }
 
     /**
@@ -98,11 +107,17 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(UserUpdateRequest $request, User $user) {
-        $data=array('name' => request('name'), 'lastname' => request('lastname'), 'state' => request('state'), 'phone' => request('phone'));
+        $data=array('name' => request('name'), 'lastname' => request('lastname'), 'state' => request('state'), 'phone' => request('phone'), 'user_role' => request('type'), 'custom_permissions' => request('custom_permissions'));
         $user->fill($data)->save();        
 
         if ($user) {
-            $user->syncRoles([request('type')]);
+            if (request('custom_permissions')=='0') {
+                $role=Role::with(['permissions'])->where('name', request('type'))->first();
+                $permissions=$role['permissions']->pluck('name');
+            } else {
+                $permissions=array_merge(['dashboard'], request('permission_id'));
+            }
+            $user->syncPermissions($permissions);
 
             // Mover imagen a carpeta users y extraer nombre
             if ($request->hasFile('photo')) {

@@ -79,6 +79,10 @@
 							<li class="contacts-block__item">
 								<span class="h6 text-black"><b>Cuenta Bancaria de Destino:</b> @if(!is_null($quote['account_destination'])){{ $quote['account_destination']->bank.' ('.$quote['account_destination']->number.')' }}@else{{ 'No Ingresado' }}@endif</span>
 							</li>
+							
+							<li class="contacts-block__item">
+								<span class="h6 text-black"><b>Estado de Pago:</b> {!! statePayment($quote->state_payment) !!}</span>
+							</li>
 
 							<li class="contacts-block__item">
 								@can('quotes.pdf.invoice')

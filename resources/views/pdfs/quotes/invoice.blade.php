@@ -107,7 +107,7 @@
 					</tr>
 					<tr>
 						<td class="text-black font-weight-bold text-right w-25 mb-2">Tasa de Cambio:</td>
-						<td class="text-black text-right w-25 mb-2">{{ number_format($quote->conversion_rate, 4, ",", ".") }}</td>
+						<td class="text-black text-right w-25 mb-2">{{ number_format($quote->conversion_rate, 6, ",", ".") }}</td>
 						<td class="border-left w-50 mb-2"></td>
 					</tr>
 				</tbody>

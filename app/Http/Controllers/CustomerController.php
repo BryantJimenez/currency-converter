@@ -23,8 +23,8 @@ class CustomerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $users=User::role(['Cliente'])->orderBy('id', 'DESC')->get();
-        $customers=User::role(['Cliente'])->where('state', '1')->orderBy('name', 'ASC')->get();
+        $users=User::where('user_role', 'Cliente')->orderBy('id', 'DESC')->get();
+        $customers=User::where([['user_role', 'Cliente'], ['state', '1']])->orderBy('name', 'ASC')->get();
         return view('admin.customers.index', compact('users', 'customers'));
     }
 
@@ -46,11 +46,13 @@ class CustomerController extends Controller
      */
     public function store(CustomerStoreRequest $request) {
         $country=Country::where('code', request('country_id'))->first();
-        $data=array('name' => request('name'), 'lastname' => request('lastname'), 'dni' => request('dni'), 'email' => request('email'), 'phone' => request('phone'), 'address' => request('address'), 'country_id' => $country->id);
+        $data=array('name' => request('name'), 'lastname' => request('lastname'), 'dni' => request('dni'), 'email' => request('email'), 'phone' => request('phone'), 'address' => request('address'), 'user_role' => 'Cliente', 'custom_permissions' => '0', 'country_id' => $country->id);
         $user=User::create($data);
 
         if ($user) {
-            $user->assignRole('Cliente');
+            $role=Role::with(['permissions'])->where('name', 'Cliente')->first();
+            $permissions=$role['permissions']->pluck('name');
+            $user->givePermissionTo($permissions);
 
             try {
                 if (request('account_question')=='1') {
@@ -80,7 +82,7 @@ class CustomerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(User $user) {
-        $customers=User::role(['Cliente'])->where('state', '1')->orderBy('name', 'ASC')->get();
+        $customers=User::where([['user_role', 'Cliente'], ['state', '1']])->orderBy('name', 'ASC')->get();
         return view('admin.customers.show', compact('user', 'customers'));
     }
 
@@ -104,11 +106,13 @@ class CustomerController extends Controller
      */
     public function update(CustomerUpdateRequest $request, User $user) {
         $country=Country::where('code', request('country_id'))->first();
-        $data=array('name' => request('name'), 'lastname' => request('lastname'), 'dni' => request('dni'), 'email' => request('email'), 'phone' => request('phone'), 'address' => request('address'), 'country_id' => $country->id);
+        $data=array('name' => request('name'), 'lastname' => request('lastname'), 'dni' => request('dni'), 'email' => request('email'), 'phone' => request('phone'), 'address' => request('address'), 'user_role' => 'Cliente', 'custom_permissions' => '0', 'country_id' => $country->id);
         $user->fill($data)->save();
 
         if ($user) {
-            $user->syncRoles(['Cliente']);
+            $role=Role::with(['permissions'])->where('name', 'Cliente')->first();
+            $permissions=$role['permissions']->pluck('name');
+            $user->syncPermissions($permissions);
 
             // Mover imagen a carpeta users y extraer nombre
             if ($request->hasFile('photo')) {
@@ -201,7 +205,7 @@ class CustomerController extends Controller
 
     public function getAccounts(Request $request){
         if (request()->has('customer_id')) {
-            $customer=User::role(['Cliente'])->where('slug', request('customer_id'))->first();
+            $customer=User::where([['user_role', 'Cliente'], ['slug', request('customer_id')]])->first();
             if (!is_null($customer)) {
                 $accounts=$customer->accounts()->select('number', 'slug', 'bank')->where('state', '1')->get();
                 return response()->json(['status' => true, 'data' => $accounts]);

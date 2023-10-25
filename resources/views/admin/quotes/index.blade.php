@@ -52,6 +52,7 @@
 									<th>Beneficiario</th>
 									<th>Moneda de Origen</th>
 									<th>Moneda de Destino</th>
+									<th>Estado de Pago</th>
 									<th>Fecha</th>
                                     @if(auth()->user()->can('quotes.show') || auth()->user()->can('quotes.edit') || auth()->user()->can('quotes.delete'))
 									<th class="no-content">Acciones</th>
@@ -67,6 +68,7 @@
 									<td>{{ $quote['customer_destination']->fullname }}</td>
 									<td>{{ $quote['currency_source']->name }}</td>
 									<td>{{ $quote['currency_destination']->name }}</td>
+									<td>{!! statePayment($quote->state_payment) !!}</td>
 									<td>{{ $quote->created_at->format('d-m-Y') }}</td>
 									@if(auth()->user()->can('quotes.show') || auth()->user()->can('quotes.edit') || auth()->user()->can('quotes.delete'))
 									<td>

@@ -115,16 +115,28 @@
 
 								<div class="form-group col-lg-6 col-md-6 col-12">
 									<label class="col-form-label">Monto<b class="text-danger">*</b></label>
-									<input class="form-control min-decimal custom-error @error('amount') is-invalid @enderror" type="text" name="amount" required placeholder="Introduzca un monto" value="{{ old('amount', ($quote->type_operation_original=='1') ? $quote->amount_destination : $quote->amount) }}">
+									<input class="form-control min-decimal custom-error @error('amount') is-invalid @enderror" type="text" name="amount" required placeholder="Introduzca un monto" value="{{ old('amount', ($quote->type_operation_original=='1') ? $quote->amount_destination : $quote->total) }}">
 									<div class="custom-error-amount"></div>
 								</div>
+
+								@can('quotes.input.state_payment')
+								<div class="form-group col-12">
+									<label class="col-form-label">Estado de Pago<b class="text-danger">*</b></label>
+									<select class="form-control @error('state_payment') is-invalid @enderror" name="state_payment" required>
+										<option value="">Seleccione</option>
+										<option value="1" @if(old('state_payment', $quote->state_payment)=='1' || old('state_payment', $quote->state_payment)=='Pagado en Destino') selected @endif>Pagado en Destino</option>
+										<option value="2" @if(old('state_payment', $quote->state_payment)=='2' || old('state_payment', $quote->state_payment)=='Pendiente') selected @endif>Pendiente</option>
+										<option value="3" @if(old('state_payment', $quote->state_payment)=='3' || old('state_payment', $quote->state_payment)=='Inconsistente por Datos Errados') selected @endif>Inconsistente por Datos Errados</option>
+									</select>
+								</div>
+								@endcan
 
 								<div class="form-group col-12">
 									<button type="button" class="btn btn-primary text-uppercase w-100" onclick="calculateCuote();">Calcular</button>
 								</div>
 
 								<div class="col-12">
-									<livewire:admin.quotes.converter :currency_source="old('currency_source_id', $quote['currency_source']->slug)" :currency_destination="old('currency_destination_id', $quote['currency_destination']->slug)" :type_operation="old('type_operation', $quote->type_operation_original)" :amount="($quote->type_operation_original=='1') ? old('amount', $quote->amount_destination) : old('amount', $quote->amount)" />
+									<livewire:admin.quotes.converter :currency_source="old('currency_source_id', $quote['currency_source']->slug)" :currency_destination="old('currency_destination_id', $quote['currency_destination']->slug)" :type_operation="old('type_operation', $quote->type_operation_original)" :amount="($quote->type_operation_original=='1') ? old('amount', $quote->amount_destination) : old('amount', $quote->total)" />
 								</div>
 
 								<div class="form-group col-12">

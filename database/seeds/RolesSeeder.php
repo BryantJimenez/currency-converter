@@ -32,6 +32,6 @@ class RolesSeeder extends Seeder
     	$superadmin->givePermissionTo(Permission::all());
 
     	$admin=Role::where('name', 'Administrador')->first();
-    	$admin->givePermissionTo(Permission::all());
+    	$admin->givePermissionTo(['dashboard', 'users.index', 'users.create', 'users.show', 'users.edit', 'users.delete', 'users.active', 'users.deactive', 'customers.index', 'customers.create', 'customers.show', 'customers.edit', 'customers.delete', 'customers.active', 'customers.deactive', 'contacts.create', 'accounts.create', 'accounts.edit', 'quotes.index', 'quotes.create', 'quotes.show', 'quotes.pdf.invoice', 'currencies.index', 'currencies.create', 'currencies.show', 'currencies.edit', 'currencies.delete', 'currencies.active', 'currencies.deactive', 'exchanges.edit', 'roles.index', 'roles.create', 'roles.show', 'roles.edit', 'roles.delete', 'reports.index', 'settings.edit']);
     }
 }

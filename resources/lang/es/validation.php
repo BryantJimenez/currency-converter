@@ -167,6 +167,7 @@ return [
         'reason'                => 'motivo',
         'type_operation'        => 'tipo de operación',
         'amount'                => 'monto',
+        'state_payment'         => 'estado del pago',
         'iso'                   => 'iso',
         'symbol'                => 'simbolo',
         'side'                  => 'lado',

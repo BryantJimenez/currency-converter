@@ -20,7 +20,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = ['name', 'lastname', 'photo', 'slug', 'dni', 'email', 'phone', 'address', 'password', 'state', 'country_id'];
+    protected $fillable = ['name', 'lastname', 'photo', 'slug', 'dni', 'email', 'phone', 'address', 'password', 'user_role', 'custom_permissions', 'state', 'country_id'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -95,7 +95,7 @@ class User extends Authenticatable
      */
     public function resolveRouteBinding($value, $field = null)
     {
-        $user=$this->with(['roles', 'country', 'accounts', 'contacts'])->where($field, $value)->first();
+        $user=$this->with(['permissions', 'country', 'accounts', 'contacts'])->where($field, $value)->first();
         if (!is_null($user)) {
             return $user;
         }

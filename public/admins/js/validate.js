@@ -1,3 +1,16 @@
+// Function for errors of validation
+function validateErrorPlacement(error, element) {
+	if (element.hasClass('select2') && element.hasClass('custom-error')) {
+		error.appendTo('.custom-error-'+$(element).attr('id'));
+	} else if ((element.attr('name').indexOf('[]')>-1) && element.hasClass('custom-error')) {
+		error.appendTo('.custom-error-'+$(element).attr('id'));
+	} else if (element.hasClass('custom-error')) {
+		error.appendTo('.custom-error-'+$(element).attr('name'));
+	} else {
+		error.insertAfter(element);
+	}
+}
+
 $(document).ready(function(){
 	// Login
 	$("button[action='login']").on("click",function(){
@@ -17,6 +30,9 @@ $(document).ready(function(){
 					maxlength: 40
 				}
 			},
+			errorPlacement: function(error, element) {
+				validateErrorPlacement(error, element);
+			},
 			submitHandler: function(form) {
 				$("button[action='login']").attr('disabled', true);
 				form.submit();
@@ -35,6 +51,9 @@ $(document).ready(function(){
 					minlength: 5,
 					maxlength: 191
 				}
+			},
+			errorPlacement: function(error, element) {
+				validateErrorPlacement(error, element);
 			},
 			submitHandler: function(form) {
 				$("button[action='recovery']").attr('disabled', true);
@@ -66,6 +85,9 @@ $(document).ready(function(){
 					minlength: 8,
 					maxlength: 40
 				}
+			},
+			errorPlacement: function(error, element) {
+				validateErrorPlacement(error, element);
 			},
 			submitHandler: function(form) {
 				$("button[action='reset']").attr('disabled', true);
@@ -108,6 +130,9 @@ $(document).ready(function(){
 					minlength: 8,
 					maxlength: 40
 				}
+			},
+			errorPlacement: function(error, element) {
+				validateErrorPlacement(error, element);
 			},
 			submitHandler: function(form) {
 				$("button[action='profile']").attr('disabled', true);
@@ -179,6 +204,9 @@ $(document).ready(function(){
 				type: {
 					required: 'Seleccione una opción.'
 				}
+			},
+			errorPlacement: function(error, element) {
+				validateErrorPlacement(error, element);
 			},
 			submitHandler: function(form) {
 				$("button[action='user']").attr('disabled', true);
@@ -278,6 +306,9 @@ $(document).ready(function(){
 					required: 'Seleccione una opción.'
 				}
 			},
+			errorPlacement: function(error, element) {
+				validateErrorPlacement(error, element);
+			},
 			submitHandler: function(form) {
 				$("button[action='customer']").attr('disabled', true);
 				form.submit();
@@ -313,11 +344,7 @@ $(document).ready(function(){
 				}
 			},
 			errorPlacement: function(error, element) {
-				if (element.hasClass('custom-error')) {
-					error.appendTo('.custom-error-'+$(element).attr('name'));
-				} else {
-					error.insertAfter(element);
-				}
+				validateErrorPlacement(error, element);
 			},
 			submitHandler: function(form) {
 				$("button[action='customer']").attr('disabled', true);
@@ -343,6 +370,9 @@ $(document).ready(function(){
 					maxlength: 191
 				}
 			},
+			errorPlacement: function(error, element) {
+				validateErrorPlacement(error, element);
+			},
 			submitHandler: function(form) {
 				$("button[action='customer']").attr('disabled', true);
 				form.submit();
@@ -363,6 +393,9 @@ $(document).ready(function(){
 					minlength: 2,
 					maxlength: 191
 				}
+			},
+			errorPlacement: function(error, element) {
+				validateErrorPlacement(error, element);
 			},
 			submitHandler: function(form) {
 				$("button[action='customer']").attr('disabled', true);
@@ -406,6 +439,10 @@ $(document).ready(function(){
 					required: true,
 					number: true,
 					min: 0
+				},
+
+				state_payment: {
+					required: true
 				}
 			},
 			messages:
@@ -428,14 +465,14 @@ $(document).ready(function(){
 
 				type_operation: {
 					required: 'Seleccione una opción.'
+				},
+
+				state_payment: {
+					required: 'Seleccione una opción.'
 				}
 			},
 			errorPlacement: function(error, element) {
-				if (element.hasClass('custom-error')) {
-					error.appendTo('.custom-error-'+$(element).attr('name'));
-				} else {
-					error.insertAfter(element);
-				}
+				validateErrorPlacement(error, element);
 			},
 			submitHandler: function(form) {
 				$("button[action='quote']").attr('disabled', true);
@@ -477,6 +514,9 @@ $(document).ready(function(){
 					required: 'Seleccione una opción.'
 				}
 			},
+			errorPlacement: function(error, element) {
+				validateErrorPlacement(error, element);
+			},
 			submitHandler: function(form) {
 				$("button[action='currency']").attr('disabled', true);
 				form.submit();
@@ -496,14 +536,41 @@ $(document).ready(function(){
 				}
 			},
 			errorPlacement: function(error, element) {
-				if (element.hasClass('custom-error')) {
-					error.appendTo('.custom-error-'+$(element).attr('id'));
-				} else {
-					error.insertAfter(element);
-				}
+				validateErrorPlacement(error, element);
 			},
 			submitHandler: function(form) {
 				$("button[action='currency']").attr('disabled', true);
+				form.submit();
+			}
+		});
+	});
+
+	// Roles
+	$("button[action='role']").on("click",function(){
+		$("#formRole, #formPermissionRole").validate({
+			rules:
+			{
+				name: {
+					required: true,
+					minlength: 2,
+					maxlength: 191
+				},
+
+				'permission_id[]': {
+					required: true
+				}
+			},
+			messages:
+			{
+				'permission_id[]': {
+					required: 'Seleccione una opción.'
+				}
+			},
+			errorPlacement: function(error, element) {
+				validateErrorPlacement(error, element);
+			},
+			submitHandler: function(form) {
+				$("button[action='role']").attr('disabled', true);
 				form.submit();
 			}
 		});
@@ -552,6 +619,9 @@ $(document).ready(function(){
 					required: 'Seleccione una opción.'
 				}
 			},
+			errorPlacement: function(error, element) {
+				validateErrorPlacement(error, element);
+			},
 			submitHandler: function(form) {
 				form.submit();
 			}
@@ -584,11 +654,7 @@ $(document).ready(function(){
 				}
 			},
 			errorPlacement: function(error, element) {
-				if (element.hasClass('custom-error')) {
-					error.appendTo('.custom-error-'+$(element).attr('name'));
-				} else {
-					error.insertAfter(element);
-				}
+				validateErrorPlacement(error, element);
 			},
 			submitHandler: function(form) {
 				$("button[action='setting']").attr('disabled', true);

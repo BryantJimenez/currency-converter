@@ -16,7 +16,7 @@ class CardUser extends Component
      */
     public function __construct($user, $route, $permission, $title)
     {
-        $this->user=User::with(['roles'])->where('slug', $user)->firstOrFail();
+        $this->user=User::where('slug', $user)->firstOrFail();
         $this->route=$route;
         $this->title=$title;
         $this->permission=$permission;

@@ -58,13 +58,13 @@ class ResetPasswordNotification extends Notification
         }
 
         return (new MailMessage)
-            ->greeting('Hola! '.$notifiable->name)
-            ->subject('Recuperar Contraseña')
-            ->line('Recibes este correo porque se ha solicitado una restablecimiento de contraseña de tu cuenta.')
-            ->action('Recuperar', url(config('app.url').route('password.reset', ['token' => $this->token, 'email' => $notifiable->getEmailForPasswordReset()], false)))
-            ->line('Este link para recuperar contraseña expirara en 30 minutos.', ['count' => config('auth.passwords.'.config('auth.defaults.passwords').'.expire')])
-            ->line('Si no realizaste esta petición, puedes ignorar este correo y nada habra cambiado.')
-            ->salutation('Saludos.');
+        ->greeting('Hola! '.$notifiable->name)
+        ->subject('Recuperar Contraseña')
+        ->line('Recibes este correo porque se ha solicitado una restablecimiento de contraseña de tu cuenta.')
+        ->action('Recuperar', url(config('app.url').route('password.reset', ['token' => $this->token, 'email' => $notifiable->getEmailForPasswordReset()], false)))
+        ->line('Este link para recuperar contraseña expirara en 30 minutos.', ['count' => config('auth.passwords.'.config('auth.defaults.passwords').'.expire')])
+        ->line('Si no realizaste esta petición, puedes ignorar este correo y nada habra cambiado.')
+        ->salutation('Saludos.');
     }
 
     /**
