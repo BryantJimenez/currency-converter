@@ -581,6 +581,10 @@ $(document).ready(function(){
 		$("#formReport").validate({
 			rules:
 			{
+				user_id: {
+					required: false
+				},
+
 				start: {
 					required: true,
 					date: false,
@@ -603,6 +607,10 @@ $(document).ready(function(){
 			},
 			messages:
 			{
+				user_id: {
+					required: 'Seleccione una opción.'
+				},
+
 				start: {
 					required: 'Seleccione una fecha.'
 				},

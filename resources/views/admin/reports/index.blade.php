@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="{{ asset('/admins/css/elements/alert.css') }}">
 <link href="{{ asset('/admins/vendor/flatpickr/flatpickr.css') }}" rel="stylesheet" type="text/css">
 <link href="{{ asset('/admins/vendor/flatpickr/custom-flatpickr.css') }}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="{{ asset('/admins/vendor/bootstrap-select/bootstrap-select.min.css') }}">
 <link href="{{ asset('/admins/vendor/sweetalerts/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('/admins/vendor/sweetalerts/sweetalert.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('/admins/css/components/custom-sweetalert.css') }}" rel="stylesheet" type="text/css" />
@@ -44,6 +45,17 @@
 						<form action="{{ route('reports.export') }}" method="POST" class="form" id="formReport">
 							@csrf
 							<div class="row">
+								<div class="form-group col-12">
+									<label class="col-form-label">Usuario (Opcional)</label>
+									<select class="form-control selectpicker custom-error @error('user_id') is-invalid @enderror" name="user_id" title="Seleccione" data-live-search="true" data-size="10">
+										<option value="">Seleccione</option>
+										@foreach($users as $user)
+										<option value="{{ $user->slug }}" @if(old('user_id')==$user->slug) selected @endif>{{ $user->fullname }}</option>
+										@endforeach
+									</select>
+									<div class="custom-error-user_id"></div>
+								</div>
+
 								<div class="form-group col-lg-6 col-md-6 col-12">
 									<label class="col-form-label">Fecha de Inicio<b class="text-danger">*</b></label>
 									<input class="form-control" type="text" name="start" placeholder="Seleccione una fecha" value="{{ old('start') }}" id="startDateSearchFlatpickr">
@@ -94,6 +106,7 @@
 @section('scripts')
 <script src="{{ asset('/admins/vendor/flatpickr/flatpickr.js') }}"></script>
 <script src="{{ asset('/admins/vendor/flatpickr/es.js') }}"></script>
+<script src="{{ asset('/admins/vendor/bootstrap-select/bootstrap-select.min.js') }}"></script>
 <script src="{{ asset('/admins/vendor/validate/jquery.validate.js') }}"></script>
 <script src="{{ asset('/admins/vendor/validate/additional-methods.js') }}"></script>
 <script src="{{ asset('/admins/vendor/validate/messages_es.js') }}"></script>

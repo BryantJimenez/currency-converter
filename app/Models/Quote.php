@@ -10,7 +10,7 @@ class Quote extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['amount', 'commission', 'iva', 'total', 'amount_destination', 'conversion_rate', 'type_operation', 'type_commission', 'value_commission', 'iva_percentage', 'reason', 'state_payment', 'customer_source_id', 'customer_destination_id', 'account_destination_id', 'currency_source_id', 'currency_destination_id'];
+    protected $fillable = ['amount', 'commission', 'iva', 'total', 'amount_destination', 'conversion_rate', 'type_operation', 'type_commission', 'value_commission', 'iva_percentage', 'reason', 'state_payment', 'customer_source_id', 'customer_destination_id', 'account_destination_id', 'currency_source_id', 'currency_destination_id', 'user_id'];
 
     /**
      * Get the reference.
@@ -97,7 +97,9 @@ class Quote extends Model
      */
     public function resolveRouteBinding($value, $field = null)
     {
-        $quote=$this->with(['customer_source' => function($query) {
+        $quote=$this->with(['user' => function($query) {
+            $query->withTrashed();
+        }, 'customer_source' => function($query) {
             $query->withTrashed();
         }, 'customer_destination' => function($query) {
             $query->withTrashed();
@@ -113,6 +115,10 @@ class Quote extends Model
         }
 
         return abort(404);
+    }
+
+    public function user() {
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function customer_source() {

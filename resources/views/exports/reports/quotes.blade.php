@@ -18,6 +18,7 @@
                 <th style="font-weight: bold;">Importe</th>
                 <th style="font-weight: bold;">Costo Envio</th>
                 <th style="font-weight: bold;">Total</th>
+                <th style="font-weight: bold;">Usuario</th>
             </tr>
         </thead>
         <tbody>
@@ -34,13 +35,14 @@
                 <td>{{ number_format($quote->amount, 2, ',', '') }}</td>
                 <td>{{ number_format($quote->commission+$quote->iva, 2, ',', '') }}</td>
                 <td>{{ number_format($quote->total, 2, ',', '') }}</td>
+                <td>{{ mb_strtoupper($quote['user']->fullname ?? '', 'UTF-8') }}</td>
             </tr>
             @endforeach
             <tr>
                 <td colspan="8" style="font-weight: bold;">Totales en: {{ mb_strtoupper($quote['currency_source']->name, 'UTF-8') }}</td>
                 <td style="font-weight: bold;">{{ number_format($quotes->sum('amount'), 2, ',', '') }}</td>
                 <td style="font-weight: bold;">{{ number_format($quotes->sum('commission')+$quotes->sum('iva'), 2, ',', '') }}</td>
-                <td style="font-weight: bold;">{{ number_format($quotes->sum('total'), 2, ',', '') }}</td>
+                <td colspan="2" style="font-weight: bold;">{{ number_format($quotes->sum('total'), 2, ',', '') }}</td>
             </tr>
         </tbody>
     </table>

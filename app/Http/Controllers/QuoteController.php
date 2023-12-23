@@ -57,6 +57,7 @@ class QuoteController extends Controller
     public function store(QuoteStoreRequest $request) {
         $data=$this->calculateQuote($request->all());
         $data['state_payment']=(Auth::user()->can('quotes.input.state_payment')) ? request('state_payment') : NULL;
+        $data['user_id']=Auth::id();
         $quote=Quote::create($data);
         if ($quote) {
             $types=['Empresa', 'Cliente'];
